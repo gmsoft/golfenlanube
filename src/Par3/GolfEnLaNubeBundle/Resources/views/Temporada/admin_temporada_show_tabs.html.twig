@@ -1,0 +1,24 @@
+<div class='row'>
+	<div class='col-xs-12'>
+		<ul class="nav nav-tabs">
+			{% if is_granted('ROLE_ADMIN_VER_CAMPEONATOS') %}
+	   		<li {% if ('admin_campeonatos_por_temporada' == active_path) %}class='active'{% endif %}>
+	   			<a href="{{ path('admin_campeonatos_por_temporada', { 'id_temporada': id_temporada }) }}">Campeonatos</a>
+   			</li>
+   			{% endif %}
+   			{% if is_granted('ROLE_ADMIN_VER_CAMPEONATOS') %}
+       		<li {% if ('admin_temporada_show_torneos' == active_path) %}class='active'{% endif %}>
+       			<a href="{{ path('admin_temporada_show_torneos', { 'id': id_temporada }) }}" >Torneos</a>
+       		</li>
+       		{% endif %}
+       		{% if is_granted('ROLE_VER_LISTA_BUENA_FE') %}
+			<li {% if ('admin_temporada_show_clubs' == active_path) %}class='active'{% endif %}>
+				<a href="{{ path('admin_temporada_show_clubs', { 'id': id_temporada }) }}" >Clubs</a>
+			</li>
+            <li {% if ('admin_temporada_show_lista_buena_fe' == active_path) %}class='active'{% endif %}>
+            	<a href="{{ path('admin_temporada_show_lista_buena_fe', { 'id_temporada': id_temporada }) }}" >Lista de Buena fe</a>
+            </li>
+            {% endif %}
+		</ul>
+	</div>
+</div>

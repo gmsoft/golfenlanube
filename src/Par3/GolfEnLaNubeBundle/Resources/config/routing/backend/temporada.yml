@@ -1,0 +1,155 @@
+admin_temporada:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:index" }
+
+admin_lista_temporada_por_circuito:
+    pattern:  /circuito/{id_circuito}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:listaPorCircuito" }
+
+admin_temporada_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:show" }
+
+admin_temporada_show_campeonatos:
+    pattern:  /{id}/show/campeonatos
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:showTorneos" }
+
+admin_temporada_show_torneos:
+    pattern:  /{id}/show/torneos
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:showTorneos" }
+    
+admin_temporada_show_clubs:
+    pattern:  /{id}/show/clubs
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:showClubs" }
+
+admin_temporada_lista_torneo_fechas_en_inscripcion:
+    pattern:  /{id_temporada}/listaTorneoFechasEnInscripcion
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:listaTorneoFechasEnInscripcion" }
+
+
+admin_temporada_lista_torneo_fechas_concluidas:
+    pattern:  /{id_temporada}/listaTorneoFechasConcluidas
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:listaTorneoFechasConcluidas" }
+    
+admin_temporada_show_lista_buena_fe:
+    pattern:  /{id_temporada}/show/listaBuenaFe
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:showListaBuenaFe" }
+
+
+admin_temporada_show_lista_buena_fe_por_temporada_club:
+    pattern:  /{id_temporada}/show/listaBuenaFe/temporadaclub/{id_temporada_club}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:showListaBuenaFe" }
+
+admin_temporada_show_lista_buena_fe_por_club:
+    pattern:  /{id_temporada}/show/listaBuenaFe/club/{id_club}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:showListaBuenaFe" }
+
+
+
+admin_temporada_quitar_jugador_de_lista_buena_fe: 
+    pattern:  /{id_temporada_club_jugador}/quitarJugadorDeListaBuenaFe
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:quitarJugadorDeListaBuenaFe" }
+    requirements: { _method: post|delete }
+
+admin_lista_buena_fe_new:
+    pattern: /{id}/listabuenafe/new/
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:newListaBuenaFe" }
+
+admin_lista_buena_fe_importar:
+    pattern: /{id}/listabuenafe/importar/
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:importarListaBuenaFe" }
+
+################ IMPORTACION LISTA BUENA FE
+
+admin_temporada_new_archivo_lista_buena_fe:
+    pattern:  /new_archivo_lista_buena_fe/temporada/{id_temporada}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:newArchivoListaBuenaFe" }
+
+admin_temporada_upload_archivo_lista_buena_fe:
+    pattern:  /upload_archivo_lista_buena_fe
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:uploadArchivoListaBuenaFe" }
+
+
+admin_temporada_importar_lista_buena_fe_de_archivo:
+    pattern:  /importar_archivo_lista_buena_fe/temporada/{id_temporada}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:importarListaBuenaFeDeArchivo" }
+
+###################
+
+
+
+admin_temporada_new:
+    pattern:  /new/circuito/{id_circuito}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:new" }
+
+admin_temporada_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:create" }
+    requirements: { _method: post }
+
+admin_temporada_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:edit" }
+    requirements:
+        id: \d+
+
+admin_temporada_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:update" }
+    requirements: { _method: post|put, id: \d+}
+
+admin_temporada_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:delete" }
+    requirements: { _method: post|delete, id: \d+ }
+
+#### EQUIPOS    
+
+admin_temporada_formulario_jugadores_para_equipo:
+    pattern:  /equipo/form_jugadores_equipo/torneofecha/{id_torneo_fecha}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:formularioJugadoresParaEquipo" }
+
+admin_temporada_equipo_new:
+    pattern:  /equipo/new/torneofecha/{id_torneo_fecha}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:newEquipo" }
+
+admin_temporada_equipo_create:
+    pattern:  /equipo/create
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:createEquipo" }
+    requirements: { _method: post }
+
+admin_temporada_lista_torneo_fechas_configurar_equipo:
+    pattern:  /{id_temporada}/listaTorneoFechasConfigurarEquipo
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:listaTorneoFechasConfigurarEquipo" }
+    requirements:
+        id_temporada: \d+
+
+
+admin_temporada_lista_equipos_por_torneo_fecha:
+    pattern:  /equipo/listaPorTorneoFecha/{id_torneo_fecha}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:listaEquiposPorTorneoFecha" }
+    requirements:
+        id_torneo_fecha: \d+
+
+admin_temporada_equipo_show:
+    pattern:  /equipo/{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:showEquipo" }
+    requirements:
+        id: \d+
+
+admin_temporada_equipo_edit:
+    pattern:  /equipo/{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:editEquipo" }
+
+admin_temporada_equipo_update:
+    pattern:  /equipo/{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:updateEquipo" }
+    requirements: { _method: post|put }
+    
+admin_temporada_equipo_delete:
+    pattern:  /equipo/{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:deleteEquipo" }
+    
+admin_temporada_obtener_handicap_de_juego:
+    pattern:  /obtenerHandicapDeJuego/{id_torneo_fecha}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:obtenerHandicapDeJuego" }

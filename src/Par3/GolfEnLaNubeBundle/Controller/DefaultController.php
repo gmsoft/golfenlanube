@@ -1,0 +1,146 @@
+<?php
+
+namespace Par3\GolfEnLaNubeBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Par3\GolfEnLaNubeBundle\Entity\Group;
+use Symfony\Component\HttpFoundation\Response;
+use Par3\GolfEnLaNubeBundle\Entity\Campeonato;
+use Par3\GolfEnLaNubeBundle\Entity\Torneo;
+use Doctrine\Common\Util\Debug;
+
+class DefaultController extends Controller
+{
+	public function testAction() 
+	{
+		Debug::dump($this->getDoctrine()->getManager()->getRepository('GolfEnLaNubeBundle:Campeonato')->tablaDeResultadosPorTemporadaClub(2));
+		die();
+	}
+	
+	public function homeAction()
+	{
+		/*
+		$em = $this->getDoctrine()->getManager();
+		$perfil = $em->getRepository('GolfEnLaNubeBundle:Group')->findOneBy( array('name' => 'CAPITAN') );
+		$perfil->addRole('ROLE_ADMIN');
+		$em->flush();
+		*/
+		return $this->render('GolfEnLaNubeBundle:Default:home.html.twig');
+	}
+	
+	public function crearPerfilesAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		
+		$perfiles = array(
+			'CAPITAN' => array(
+				'ROLE_USER', 
+				'ROLE_ADMIN', 
+				'ROLE_ADMIN_CREAR_EQUIPO',
+				'ROLE_ADMIN_AGREGAR_JUGADOR_A_LISTA_BUENA_FE', 
+				'ROLE_ADMIN_QUITAR_JUGADOR_DE_LISTA_BUENA_FE', 
+				'ROLE_VER_LISTA_BUENA_FE',
+			),
+			'DATA_ENTRY' =>  array(
+				'ROLE_USER',
+				'ROLE_ADMIN', 
+				'ROLE_ADMIN_CARGAR_TARJETA',
+			), 
+			'COMITE' => array(
+				'ROLE_USER',
+			),
+			'ADMINISTRADOR' => array(
+					'ROLE_ADMIN',
+					'ROLE_ADMIN_ACTUALIZAR_HCPS_Y_TARJETAS',
+					'ROLE_ADMIN_AGREGAR_CLUB_A_TEMPORADA',
+					'ROLE_ADMIN_AGREGAR_JUGADOR_A_LISTA_BUENA_FE',
+					'ROLE_ADMIN_ASIGNAR_CUALQUIER_PERFIL',
+					'ROLE_ADMIN_ASIGNAR_PERFILES',
+					'ROLE_ADMIN_ASIGNAR_PERFIL_',
+					'ROLE_ADMIN_CARGAR_TARJETA',
+					'ROLE_ADMIN_CREAR_CAMPEONATO',
+					'ROLE_ADMIN_CREAR_EQUIPO',
+					'ROLE_ADMIN_CREAR_JUGADOR',
+					'ROLE_ADMIN_CREAR_TORNEO',
+					'ROLE_ADMIN_CREAR_USUARIO',
+					'ROLE_ADMIN_DESIGNAR_CAPITANES',
+					'ROLE_ADMIN_EDITAR_CAMPEONATO',
+					'ROLE_ADMIN_EDITAR_TORNEO',
+					'ROLE_ADMIN_ELIMINAR_CAMPEONATO',
+					'ROLE_ADMIN_ELIMINAR_TORNEO',
+					'ROLE_ADMIN_ELIMINAR_USUARIO',
+					'ROLE_ADMIN_ELIMINAR_TEMPORADA_CLUB', 
+					'ROLE_ADMIN_HABILITAR_CARGA_TARJETAS',
+					'ROLE_ADMIN_IMPORTAR_HCP_Y_TARJETAS_DE_ARCHIVO',
+					'ROLE_ADMIN_IMPORTAR_JUGADORES_DE_ARCHIVO',
+					'ROLE_ADMIN_IMPORTAR_LISTA_BUENA_FE',
+					'ROLE_ADMIN_QUITAR_JUGADOR_DE_LISTA_BUENA_FE',
+					'ROLE_ADMIN_QUITAR_CUALQUIER_JUGADOR_DE_LISTA_BUENA_FE',
+					'ROLE_ADMIN_TODOS_EQUIPOS',
+					'ROLE_ADMIN_VER_CAMPEONATOS',
+					'ROLE_ADMIN_VER_LISTA_BUENA_FE_COMPLETA',
+					'ROLE_ADMIN_VER_LISTA_EQUIPOS_COMPLETA',
+					'ROLE_ADMIN_VER_LISTA_JUGADORES',
+					'ROLE_ADMIN_VER_LISTA_USUARIOS',
+					'ROLE_ADMIN_VER_LISTA_CLUBS', 
+					'ROLE_ADMIN_VER_LISTA_TEMPORADAS',
+					'ROLE_ADMIN_VER_TORNEO',
+					'ROLE_VER_LISTA_BUENA_FE',
+			),
+		);
+		
+		foreach ($perfiles as $name => $roles)
+		{
+			$perfil = $em->getRepository('GolfEnLaNubeBundle:Group')->findOneBy( array('name' => $name) );
+			if ( is_null($perfil)) 
+			{
+				$perfil = new Group($name);
+				$em->persist($perfil);
+			}
+			foreach ($roles as $rol)
+			{
+				if (!$perfil->hasRole($rol)) $perfil->addRole($rol);
+			}
+		}
+		$em->flush();
+		return Response::create('ok', 200);
+	}
+
+	
+}
+/*
+
+ROLE_ADMIN
+ROLE_ADMIN_ACTUALIZAR_HCPS_Y_TARJETAS
+ROLE_ADMIN_AGREGAR_CLUB_A_TEMPORADA
+ROLE_ADMIN_AGREGAR_JUGADOR_A_LISTA_BUENA_FE
+ROLE_ADMIN_ASIGNAR_CUALQUIER_PERFIL
+ROLE_ADMIN_ASIGNAR_PERFILES
+ROLE_ADMIN_ASIGNAR_PERFIL_
+ROLE_ADMIN_CARGAR_TARJETA
+ROLE_ADMIN_CREAR_CAMPEONATO
+ROLE_ADMIN_CREAR_EQUIPO
+ROLE_ADMIN_CREAR_JUGADOR
+ROLE_ADMIN_CREAR_TORNEO
+ROLE_ADMIN_CREAR_USUARIO
+ROLE_ADMIN_DESIGNAR_CAPITANES
+ROLE_ADMIN_EDITAR_CAMPEONATO
+ROLE_ADMIN_EDITAR_TORNEO
+ROLE_ADMIN_ELIMINAR_CAMPEONATO
+ROLE_ADMIN_ELIMINAR_TORNEO
+ROLE_ADMIN_ELIMINAR_USUARIO
+ROLE_ADMIN_HABILITAR_CARGA_TARJETAS
+ROLE_ADMIN_IMPORTAR_HCP_Y_TARJETAS_DE_ARCHIVO
+ROLE_ADMIN_IMPORTAR_JUGADORES_DE_ARCHIVO
+ROLE_ADMIN_IMPORTAR_LISTA_BUENA_FE
+ROLE_ADMIN_QUITAR_JUGADOR_DE_LISTA_BUENA_FE
+ROLE_ADMIN_TODOS_EQUIPOS
+ROLE_ADMIN_VER_CAMPEONATOS
+ROLE_ADMIN_VER_LISTA_BUENA_FE_COMPLETA
+ROLE_ADMIN_VER_LISTA_EQUIPOS_COMPLETA
+ROLE_ADMIN_VER_LISTA_JUGADORES
+ROLE_ADMIN_VER_LISTA_USUARIOS
+ROLE_ADMIN_VER_TORNEO
+ROLE_VER_LISTA_BUENA_FE 
+
+ */

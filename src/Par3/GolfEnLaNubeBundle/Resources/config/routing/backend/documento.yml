@@ -1,0 +1,34 @@
+admin_documento:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:index" }
+
+admin_documento_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:show" }
+
+admin_documento_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:new" }
+
+admin_documento_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:create" }
+    requirements: { _method: post }
+
+admin_documento_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:edit" }
+
+admin_documento_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:update" }
+    requirements: { _method: post|put }
+
+admin_documento_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:delete" }
+    requirements: { _method: post|delete }
+
+admin_documento_upload_por_ajax:
+    pattern:  /upload_por_ajax
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:uploadPorAjax" }

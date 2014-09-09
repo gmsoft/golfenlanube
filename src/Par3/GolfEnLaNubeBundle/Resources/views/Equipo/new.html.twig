@@ -1,0 +1,41 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+	<link href="{{ asset('/bundles/golfenlanube/css/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2-bootstrap.css') }}" rel="stylesheet" />
+	{{ form_stylesheet(form) }}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('/bundles/golfenlanube/js/jquery-ui-1.10.4.custom.min.js') }}" ></script>
+	<script src="{{ asset('/bundles/golfenlanube/js/select2/select2.min.js') }}" ></script>
+	{{ form_javascript(form) }}
+{% endblock %}
+
+{% block page_header -%}
+	<h3>Equipo: {{ entity.club.nombre }}</h3>
+	<h4>{{ entity.torneofecha.torneo.nombre }}, {{ entity.torneofecha.fecha|date('d-m-Y') }}  </h4>
+{% endblock %}
+
+{% block body -%}
+    
+	<div class='row'>
+		<div class='col-md-12'>
+			{#{ form(form, {'style': 'horizontal'}) }#}
+			{{ include( 'GolfEnLaNubeBundle:Equipo:form.html.twig', {'form': form } ) }}
+			
+		</div>
+	</div>
+    
+	<div class='row'>
+		<div class='col-md-12'>
+	
+	        <ul class="record_actions">
+			    <li>
+			        <a href="{{ path('admin_equipo') }}">
+			            Volver
+			        </a>
+			    </li>
+			</ul>
+{% endblock %}

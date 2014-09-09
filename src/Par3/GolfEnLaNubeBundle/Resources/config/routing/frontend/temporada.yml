@@ -1,0 +1,46 @@
+temporada:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:index" }
+
+temporada_lista_por_circuito:
+    pattern:  /{id_circuito}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:listaPorCircuito" }
+
+temporada_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:show" }
+
+temporada_show_torneos:
+    pattern:  /{id}/show/torneos
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:showTorneos" }
+    
+temporada_show_clubs:
+    pattern:  /{id}/show/clubs
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:showClubs" }
+    
+temporada_show_jugadores:
+    pattern:  /{id}/show/jugadores
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:showJugadores" }
+
+temporada_new:
+    pattern:  /new/{id_circuito}
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:new" }
+
+temporada_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:create" }
+    requirements: { _method: post }
+
+temporada_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:edit" }
+
+temporada_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:update" }
+    requirements: { _method: post|put }
+
+temporada_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Temporada:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,103 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>{{ entity.nombre }} <small>{{ entity.formatojuego }}</small></h3>
+	<h4>	
+		Circuito {{ entity.temporada.circuito.nombre }}<small> - </small>Temporada {{ entity.temporada.nombre }}
+	</h4>
+{% endblock %}
+
+{% block body -%}
+
+	<div class='row '>
+		<div class='col-lg-6'>
+			<ul class="list-group record_properties">
+				<!-- li class="list-group-item"><strong>{#{ entity.hoyospordia }#}</strong> hoyos por fecha</li -->
+				<li class="list-group-item">Apertura de inscripci&oacute;n: <strong>{{ entity.aperturainscripcion|date('d-m-Y') }}</strong></li>
+				<li class="list-group-item">Cierre de inscripci&oacute;n: <strong>{{ entity.cierreinscripcion|date('d-m-Y') }}</strong> </li>
+				<li class="list-group-item">Inicio: <strong>{{ entity.inicio|date('d-m-Y') }}</strong> </li>
+			</ul>
+		</div>
+		<div class='col-lg-6'>
+			<ul class="list-group record_properties">
+				<!-- li class="list-group-item"><strong>{#{ entity.hoyospordia }#}</strong> hoyos por fecha</li -->
+				<li class="list-group-item">Titulares por club: <strong>{{ entity.titularesporclub }}</strong> </li>
+				<li class="list-group-item">Suplentes por club: <strong>{{ entity.suplentesporclub }}</strong> </li>
+			</ul>
+		</div>
+		
+	</div>
+	<div class='row '>
+		<div class='col-lg-12'>
+			<ul class="list-inline record_actions">
+				{% if is_granted('ROLE_ADMIN_CREAR_TORNEO') %}
+		            <li><a href='{{ path('admin_torneo_edit', {'id' : entity.id }) }}' class='btn btn-default' >{{ icon('edit') }} Editar </a></li>
+	            {% endif %}
+				{% if (not delete_form is null ) and is_granted('ROLE_ADMIN_ELIMINAR_TORNEO') %}
+	            <li>{{ form(delete_form) }}</li>
+	            {% endif %}
+			</ul>
+		</div>
+	</div>
+
+	
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">D&iacute;as</div>
+		
+		<!-- List group -->
+		<div class='table-responsive'>
+			<table class="table table-condensed table-striped">
+				<thead>
+					<tr>
+						<th> # </th>
+						<th class="text-center">Fecha</th>
+						<th class="text-center">Hoyos</th>
+						<!-- th class="text-center">Jugadores<br/> por linea</th>
+						<th class="text-center">Salidas<br/>simult.</th --->
+						<th class="text-center">Club</th>
+						<th class="text-center">Cancha</th>
+						<th>&nbsp;</th> 
+					</tr>
+				</thead>
+				<tbody>
+					{% for fecha in entity.fechas %}
+						<tr>
+							<td>{{ fecha.numerofecha }}</td>
+							<td class="text-center">{{ fecha.fecha|date('d-m-Y') }}</td>
+							<td class="text-center">{{ fecha.hoyos }}</td>
+							<!-- td>{{ fecha.jugadoresporlinea }}</td -->
+							<!-- td>{#% if fecha.salidassimultaneas == true %#}Si{#% else %#}No{#% endif %#}</td -->
+							<td class="text-center">{{ fecha.cancha.club }}</td>
+							<td class="text-center">{{ fecha.cancha.numero }}</td>
+							<td>
+								{% if is_granted('ROLE_ADMIN_EDITAR_TORNEO') %}
+									<a href="{{ path('admin_torneofecha_edit', {'id': fecha.id }) }}" class='btn btn-default btn-sm'>{{ icon('edit') }} Modificar</a>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+					<!-- Para Circuito Par3 no hay posibilidad de jugar a más de un día (siempre se hacen torneos de un día a 18 hoyos) 
+						pero pra otros clubes y circuitos habrá que agregar esta opcion que ya está armada. Solo habría que agregar el condicional correcto -->
+					<!--  tr>
+						<td colspan='8'>
+							<a href="{#{ path('admin_torneofecha_new', {'id_torneo': entity.id }) }#}" class='btn btn-default btn-primary btn-sm'>Nueva fecha</a>
+						</td>
+					</tr -->
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class='row '>
+		<div class='col-lg-12'>
+			<ul class="list-inline record_actions">
+				<li>
+					<a href="{{ path('admin_temporada_show_torneos', {'id': entity.temporada.id }) }}">
+						Volver
+					</a>
+			    </li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}

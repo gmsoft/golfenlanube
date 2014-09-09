@@ -1,0 +1,96 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header %}
+	<h3>Importar lista de Buena Fe desde Archivo</h3>
+{% endblock %}
+
+{% block body -%}
+
+	<div class='row'>
+		<div class='col-lg-12'>
+			<div id='mensaje' class='alert hide'></div>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-lg-12'>
+			<h5>Seleccione el archivo a importar. Corrobore que el formato del mismo sea el correcto:</h5>
+			<h6>matricula;club</h6>
+			<form action='{{ form.vars.action }}' id='form_jugadores'  class='form-inline'>
+			    {{ bootstrap_set_style('inline') }}
+				{{ form_row(form.file) }}
+				{{ form_row(form.submit) }}
+				{{ form_widget(form.name) }}
+				{{ form_widget(form.id_documento, {attr: {'data-tipo': 'lista_buena_fe'}}) }}
+				{{ form_widget(form._token) }}
+			</form>
+					</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-lg-12'>
+			<button id='btn_importar' data-loading-text="Importando..."  class='btn btn-default'>Importar</button>
+		</div>
+	</div>
+
+{% endblock  %}
+
+{% block javascripts %}
+<script type="text/javascript"> 
+
+	$('#btn_importar').on('click', function () 
+		{
+			var id_documento = $('[data-tipo=lista_buena_fe]').val();
+			var btn = $(this);
+		    btn.button('loading');
+			$.ajax({
+				url: '{{ path('admin_temporada_importar_lista_buena_fe_de_archivo', {'id_temporada': temporada.id }) }}',
+				data: {
+					'id_documento': id_documento,
+					},
+				success: function (response) {
+					$('#mensaje').html('Se han importado ' + response + 'jugadores').addClass('alert-success');
+				}
+			})
+			.fail(function (xhr, textStatus, errorThrown) {
+				$('#mensaje').html('Ha ocurrido un error. Vuelva a intentar importar el archivo o consulte al administrador. ').addClass('alert-warning').removeClass('hide');
+			})
+			.always(function () {
+			      btn.button('reset');
+		    });
+		});
+
+
+		$('form').on('submit', function (e) 
+			{
+				e.preventDefault();
+				var id_form = $(this).attr('id');
+				var datos = new FormData($(this)[0]);
+				var btn = $(this).find('[type=submit]');
+				var campo_id_documento = $(this).find('input[id$=id_documento]');
+
+			    btn.button('loading');
+
+				$.ajax({
+					url: '{{ path('admin_temporada_upload_archivo_lista_buena_fe') }}',
+					type: 'POST',
+					contentType: false,
+					processData: false,
+					cache: false, 
+					async: false,
+					data: datos,
+					success: function (response) {
+						$('#mensaje_' + id_form).html('Se han subido el archivo').addClass('alert-success');
+						$(campo_id_documento).val(response);
+					}
+				})
+				.fail(function (xhr, textStatus, errorThrown) {
+					$('#mensaje_' + id_form).html('Ha ocurrido un error. Vuelva a intentar subir el archivo o consulte al administrador. ').addClass('alert-warning').removeClass('hide');
+				})
+				.always(function () {
+				      btn.button('reset');
+			    });
+			});
+		
+</script> 
+{% endblock %}

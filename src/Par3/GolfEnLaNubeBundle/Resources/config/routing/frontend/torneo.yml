@@ -1,0 +1,4 @@
+torneo_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Torneo:show" }
+

@@ -1,0 +1,68 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>TorneoFecha</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Id_torneo</th>
+                <td>{{ entity.idtorneo }}</td>
+            </tr>
+            <tr>
+                <th>Id_club</th>
+                <td>{{ entity.idclub }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ entity.fecha|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Categorias_masculinas</th>
+                <td>{{ entity.categoriasmasculinas }}</td>
+            </tr>
+            <tr>
+                <th>Categorias_femeninas</th>
+                <td>{{ entity.categoriasfemeninas }}</td>
+            </tr>
+            <tr>
+                <th>Jugadores_por_linea</th>
+                <td>{{ entity.jugadoresporlinea }}</td>
+            </tr>
+            <tr>
+                <th>Salidas_simultaneas</th>
+                <td>{{ entity.salidassimultaneas }}</td>
+            </tr>
+            <tr>
+                <th>Ultima_salida</th>
+                <td>{{ entity.ultimasalida }}</td>
+            </tr>
+            <tr>
+                <th>Frecuencia_salida</th>
+                <td>{{ entity.frecuenciasalida }}</td>
+            </tr>
+            <tr>
+                <th>Suspendido</th>
+                <td>{{ entity.suspendido }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_torneofecha') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('admin_torneofecha_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

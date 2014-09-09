@@ -1,0 +1,74 @@
+admin_en_la_nube_homepage:
+    pattern:  /golf
+    defaults: { _controller: GolfEnLaNubeBundle:Default:index }
+
+admin_institucion:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/institucion.yml"
+    prefix:   /institucion
+
+admin_formato_juego:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/formatojuego.yml"
+    prefix:   /formatojuego
+
+admin_club:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/club.yml"
+    prefix:   /club
+
+admin_cancha:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/cancha.yml"
+    prefix:   /cancha
+
+admin_torneo:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/torneo.yml"
+    prefix:   /torneo
+
+admin_torneo_fecha:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/torneofecha.yml"
+    prefix:   /torneofecha
+
+admin_tarjeta:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/tarjeta.yml"
+    prefix:   /tarjeta
+
+admin_circuito:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/circuito.yml"
+    prefix:   /circuito
+
+admin_temporada:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/temporada.yml"
+    prefix:   /temporada
+
+admin_temporadaclub:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/temporadaclub.yml"
+    prefix:   /temporadaclub
+
+
+admin_temporadaclubjugador:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/temporadaclubjugador.yml"
+    prefix:   /temporadaclubjugador
+
+
+admin_documento:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/documento.yml"
+    prefix:   /documento
+
+admin_jugador:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/jugador.yml"
+    prefix:   /jugador
+
+admin_equipo:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/equipo.yml"
+    prefix:   /equipo
+
+admin_campeonato:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/campeonato.yml"
+    prefix:   /campeonato
+    
+admin_user:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/backend/user.yml"
+    prefix:   /user
+
+crear_perfiles: 
+    pattern:  /crear/perfiles
+    defaults: { _controller: "GolfEnLaNubeBundle:Default:crearPerfiles" }
+    

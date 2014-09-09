@@ -1,0 +1,34 @@
+campeonato:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:index" }
+
+campeonato_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:show" }
+
+campeonato_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:new" }
+
+campeonato_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:create" }
+    requirements: { _method: post }
+
+campeonato_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:edit" }
+
+campeonato_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:update" }
+    requirements: { _method: post|put }
+
+campeonato_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:delete" }
+    requirements: { _method: post|delete }
+
+campeonato_tabla_de_posiciones:
+    pattern:  /{id}/tablaDePosiciones
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:tablaDePosiciones" }

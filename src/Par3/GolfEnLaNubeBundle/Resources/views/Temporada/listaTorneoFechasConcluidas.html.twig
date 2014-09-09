@@ -1,0 +1,109 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+
+{% block page_header -%}
+	<h3>Torneos jugados a la fecha</h3>
+	<h4>	
+		Circuito {{ temporada.circuito.nombre }}<small> - </small>Temporada {{ temporada.nombre }} 
+	</h4>
+{% endblock %}
+
+{% block body -%}
+
+	<div class='hidden'>
+		{#{ form(delete_tarjeta_form, {attr : { 'id': 'form_delete_tarjeta'}}) }#}
+	</div>
+	
+	<div class='row '>
+		<div class='col-lg-12'>
+
+			<div class='table-responsive'>
+				<table class='table table-condensed'>
+
+				<thead>
+					<tr>
+						<th class="text-center">Torneo</th>
+						<th class="text-center">Fecha</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					{% for fecha in fechas %}
+						<tr>
+							<td>
+								{{ fecha.torneo.nombre }}
+							</td>
+							<td>{{ fecha.fecha|date('d-m-Y') }}</td>
+							<td>
+								{% if fecha.habilitarcargaresultados == true %}
+									{% if  is_granted('ROLE_ADMIN_HABILITAR_CARGA_TARJETAS') %}
+										<a href='{{ path('admin_torneofecha_habilitar_carga_tarjetas', { 'id_torneo_fecha': fecha.id, 'habilitar': 'deshabilitar' }) }}' class='btn btn-default' > 
+											Deshabilitar carga
+										</a>
+									{% endif %}
+								
+									{% if fecha.torneofechajugadores|length > 0 %}
+										{% if  is_granted('ROLE_ADMIN_CARGAR_TARJETA') %}
+											<a href='{{ path('admin_torneofecha_lista_jugadores_cargar_tarjetas', { 'id_torneo_fecha': fecha.id }) }}' class='btn btn-default' > 
+												Cargar tarjetas
+											</a>
+										{% endif %}
+									{% else %}
+										- No se registran jugadores inscriptos - 
+									{% endif %}
+								{% else %}
+									{% if  is_granted('ROLE_ADMIN_HABILITAR_CARGA_TARJETAS') %}
+										<a href='{{ path('admin_torneofecha_habilitar_carga_tarjetas', { 'id_torneo_fecha': fecha.id, 'habilitar': 'habilitar' }) }}' class='btn btn-default' > 
+											Habilitar carga
+										</a>
+									{% endif %}
+									{% if  is_granted('ROLE_ADMIN') %} {#  _COMUNICAR_RESULTADOS_POR_MAIL  #}
+										<a href='{{ path('admin_torneofecha_comunicar_resultados_por_mail', { 'id_torneo_fecha': fecha.id }) }}' class='btn btn-default' > 
+											{{ icon('envelope') }} &nbsp; Comunicar por mail
+										</a>
+									
+									{% endif %}
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+				</table>
+			</div>
+		
+		</div>
+	</div>
+
+
+	<div class='row '>
+		<div class='col-lg-12'>
+			<ul class="list-inline record_actions">
+				<li>
+					<!-- a href="#">Volver</a -->
+			    </li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+
+	<script type="text/javascript">
+
+		$('.eliminarTarjeta').on('click', function () {
+			if (confirm('Esta seguro que quiere Eliminar esta tarjeta?'))
+				submitEliminarTarjeta($(this).data('id-tarjeta'));
+		});
+
+		function submitEliminarTarjeta(id)
+		{
+			var _form = $('form[id=form_delete_tarjeta]')
+			var _action = $(_form).attr('action');
+			_action = _action.replace(/__NAME__/, id);
+			$(_form).attr('action', _action);
+			$(_form).submit();
+		}
+
+	</script>
+{% endblock %}

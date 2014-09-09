@@ -1,0 +1,29 @@
+<div class="modal-header"><h3>Seleccionar perfiles</h3></div>
+
+<form action="{{ path('admin_user_asignar_perfiles') }}">
+	<input type='hidden' name='user' value='{{ entity.id }}' />
+	<div class='row '>
+		<div class='col-lg-12'>
+			<!-- Tab panes -->
+			<ul class="list-group ">
+				{% for perfil in perfiles %}
+				
+					{% if entity.hasgroup(perfil.name) %}
+						{% set checkbox = 'checked="checked"' %}
+					{% else %}
+						{% set checkbox = '' %}
+					{% endif %} 
+					<li class="list-group-item">
+						{{ perfil.name }} &nbsp; &nbsp;
+						<input type='checkbox' name='perfiles[{{ perfil.name }}]' value='{{ perfil.id }}' {{ checkbox  }} />
+					</li>
+				{% endfor %}
+				{% if is_granted('ROLE_ADMIN_ASIGNAR_PERFILES') %}
+					<li class="list-group-item">
+						<button class='btn btn-default btn-primary'  data-toggle="modal"  href="{{ path('admin_user_elegir_perfiles', {'id': entity.id }) }}"  data-target="#myModal">Guardar cambios</button>
+					</li>
+				{% endif %}
+	  		</ul>
+		</div>
+	</div>
+</form>

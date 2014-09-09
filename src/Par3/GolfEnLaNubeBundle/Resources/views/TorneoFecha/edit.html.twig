@@ -1,0 +1,55 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+	<link href="{{ asset('/bundles/golfenlanube/css/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2-bootstrap.css') }}" rel="stylesheet" />
+	{{ form_stylesheet(edit_form) }}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('/bundles/golfenlanube/js/jquery-ui-1.10.4.custom.min.js') }}" ></script>
+	<script src="{{ asset('/bundles/golfenlanube/js/select2/select2.min.js') }}" ></script>
+	{{ form_javascript(edit_form) }}
+{% endblock %}
+
+{% block page_header -%}
+	<h3>Modificar datos de jornada</h3>
+{% endblock %}
+
+{% block body %}
+
+	<div class='row'>
+		<div class='col-md-12'>
+		    {{ form_start(edit_form, {'style': 'horizontal'}) }}
+			    {{ form_row(edit_form.fecha) }}
+			    {{ form_row(edit_form.hoyos) }}
+			    {{ form_row(edit_form.cancha) }}
+			    {{ form_row(edit_form.jugadores_por_linea) }}
+			    
+		    	<div class='form-group'>
+					<label class="control-label col-md-2 required" >Salidas simult&aacute;neas</label>
+					<div class='col-md-10'>
+						{{ form_widget(edit_form.salidas_simultaneas)  }}
+					</div>
+				</div>
+				{{ form_row(edit_form._token) }}
+				
+				{{ form_row(edit_form.submit) }}
+			</form>	    
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-md-12'>
+			<ul class="list-inline record_actions">
+				<li>
+			        <a href="{{ path('admin_torneo_show', {'id': entity.torneo.id}) }}">
+			            Volver
+			        </a>
+			    </li>
+   			    {% if is_granted('ROLE_ADMIN_ELIMINAR_TORNEO') %}<li>{{ form(delete_form) }}</li>{% endif %}
+			</ul>
+		</div>
+	</div>
+{% endblock %}

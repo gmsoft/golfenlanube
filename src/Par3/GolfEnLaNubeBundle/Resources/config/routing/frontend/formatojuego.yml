@@ -1,0 +1,30 @@
+formatojuego:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:FormatoJuego:index" }
+
+formatojuego_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:FormatoJuego:show" }
+
+formatojuego_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:FormatoJuego:new" }
+
+formatojuego_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:FormatoJuego:create" }
+    requirements: { _method: post }
+
+formatojuego_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:FormatoJuego:edit" }
+
+formatojuego_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:FormatoJuego:update" }
+    requirements: { _method: post|put }
+
+formatojuego_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:FormatoJuego:delete" }
+    requirements: { _method: post|delete }

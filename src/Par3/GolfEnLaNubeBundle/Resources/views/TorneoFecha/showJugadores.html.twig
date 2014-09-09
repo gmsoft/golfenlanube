@@ -1,0 +1,38 @@
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<!-- List group -->
+		<div class='table-responsive'>
+			<table class="table table-condensed table-striped" style='font-size:0.9em'>
+				<thead>
+					<tr>
+						<th class="text-center">Club</th>
+						<th class="text-center">Titular o <br/>Suplente</th>
+						<th class="text-center">Matr&iacute;cula</th>
+						<th class="text-center">Apellido y nombre</th>
+						<th class="text-center">HCP Par 3</th>
+						<th class="text-center">Tarjetas Par3</th>
+						<th class="text-center">HCP Std</th>
+						<th class="text-center">Tarjetas Std</th>
+						<th class="text-center">Juega con</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for equipo in entity.equipos %}
+						{% for tfj in equipo.torneofechajugadores if tfj.jugador is not null%}
+							<tr>
+								<td>{{ equipo.temporadaclub }}</td>
+								<td class="text-center">{% if tfj.titular == true %}T{% else %}S{% endif %}</td>
+								<td class="text-center">{{ tfj.idjugador }}</td>
+								<td class="text-center"><small>{{ tfj.jugador.persona.nombrecompleto }}</small></td>
+								<td class="text-center">{{ tfj.handicappar3 }}</td>
+								<td class="text-center">{{ tfj.jugador.totalPar3NMesesAnterioresAFecha(entity.fecha, 12) }}</td>
+								<td class="text-center">{{ tfj.handicapestandar }}</td>
+								<td class="text-center">{{ tfj.jugador.totalEstandarNMesesAnterioresAFecha(entity.fecha, 12) }}</td>
+								<td class="text-center">{{ tfj.handicapdejuego }}</td>
+							</tr>
+						{% endfor %}
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>

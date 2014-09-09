@@ -1,0 +1,32 @@
+admin_temporadaclubjugador:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClubJugador:index" }
+
+admin_temporadaclubjugador_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClubJugador:show" }
+    requirements:
+        id: \d+
+
+admin_temporadaclubjugador_new:
+    pattern:  /new/temporadaclub/{id_temporada_club}
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClubJugador:new" }
+
+admin_temporadaclubjugador_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClubJugador:create" }
+    requirements: { _method: post }
+
+admin_temporadaclubjugador_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClubJugador:edit" }
+
+admin_temporadaclubjugador_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClubJugador:update" }
+    requirements: { _method: post|put }
+
+admin_temporadaclubjugador_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClubJugador:delete" }
+    requirements: { _method: post|delete }

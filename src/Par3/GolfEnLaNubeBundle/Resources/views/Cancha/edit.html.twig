@@ -1,0 +1,27 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>Modificar datos de la cancha</h3>
+{% endblock %}
+
+{% block body -%}
+
+	<div class='row'>
+		<div class='col-md-12'>
+   			{{ form(edit_form, {'style': 'horizontal'}) }}
+   		</div>
+   	</div>
+
+	<div class='row'>
+		<div class='col-md-12'>
+	        <ul class="record_actions">
+			    <li>
+			        <a href="{{ path('admin_club_show', {'id': entity.club.id}) }}">
+			            Volver
+			        </a>
+			    </li>
+			    <li>{{ form(delete_form) }}</li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}

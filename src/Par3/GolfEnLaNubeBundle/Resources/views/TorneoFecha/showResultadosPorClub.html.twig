@@ -1,0 +1,36 @@
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+
+		<!-- List group -->
+		<div class='table-responsive'>
+			<table class="table table-condensed table-striped">
+				<thead>
+					<tr>
+						<th class="text-center">Posici&oacute;n</th>
+						<th class="text-center">Club</th>
+						<th class="text-center">Golpes</th>
+	 					{% for i in 1..(entity.torneo.titularesporclub) %}
+	 						<th class="text-center">Jugador {{ i }}</th>
+	 					{% endfor %}
+						<th class="text-center">Total<br /> Desempate</th>
+ 					</tr>
+				</thead>
+				<tbody>
+					{% if resultados_por_club|length > 0 %}
+						{% for equipo in entity.getEquiposOrderByPosicion if equipo.posicion is not null %}
+							<tr>
+								<td class="text-center">{{ equipo.posicion}}
+								<td>{{ equipo.temporadaclub }}</td>
+								<td class="text-center">{{ equipo.scoreposicionante|default('-') }}</td>
+								{% set scoresnetos = equipo.getscoresnetos %}
+								{% for i in 1..(entity.torneo.titularesporclub) %}
+			 						<td class="text-center">{{ attribute(scoresnetos, (i-1)) is defined ? attribute(scoresnetos, (i-1)) : '-' }}</td>
+				 				{% endfor %}
+								<td class="text-center">{{ equipo.scoredesempate|default('-') }}</td>
+			 				</tr>
+						{% endfor %}
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>

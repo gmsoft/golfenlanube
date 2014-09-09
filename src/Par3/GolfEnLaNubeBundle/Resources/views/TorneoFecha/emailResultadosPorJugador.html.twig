@@ -1,0 +1,110 @@
+<html>
+	<body>
+		<h3 align="center" >Resultados</h3>
+		<table align="center" border='1' cellspacing='0' cellpadding='4px'>
+			<thead>
+				<tr>
+					<th style='text-align:center;'>Posicion</th>
+					<th style='text-align:center;'>Jugador</th>
+					<th style='text-align:center;'>Club</th>
+					<th>&nbsp;</th>
+					<th style='text-align:center;'>Ida</th>
+					{% if (entity.hoyos > 9) %}
+						<th style='text-align:center;'>Vuelta</th>
+					{% endif %}
+					<th style='text-align:center;'>Gross</th>
+					{% if orden_por == 'neto' %}
+						<th style='text-align:center;'>Handicap</th>
+						<th style='text-align:center;'>Neto</th>
+					{% endif  %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for tarjeta in tarjetas %}
+					<tr data-id-tarjeta='{{ tarjeta.id }}'>
+						<td style='text-align:center;'>
+							{% if tarjeta.estado == 'OK' %}
+								{% if (orden_por == 'neto' ) %}
+									{{ tarjeta.torneofechajugador.posicionporneto }}
+								{% elseif (orden_por == 'gross' ) %}
+									{{ tarjeta.torneofechajugador.posicionporgross }}
+								{% endif %}
+							{% else %}
+								{{ tarjeta.estado }}
+							{% endif %}
+						</td>
+						<td>{{ tarjeta.torneofechajugador.jugador.persona.nombrecompleto|default(' - Nombre no disponible') }}</td>
+						<td>{{ tarjeta.torneofechajugador.equipo.temporadaclub }}</td>
+						<td style='text-align:center;'>
+							{% if tarjeta.estado != 'OK' %}
+								{{ tarjeta.comentario }}
+							{% else  %} 
+								&nbsp;
+							{% endif %}
+						</td>
+						<td style='text-align:center;'>{{ tarjeta.totalida }}</td>
+						{% if (entity.hoyos > 9) %}
+							<td style='text-align:center;'>{{ tarjeta.totalvuelta }}</td>
+						{% endif %}
+						<td style='text-align:center;'>{{ tarjeta.scoregross|default('-') }}</td>
+						{% if orden_por == 'neto' %}
+							<td style='text-align:center;'>{{ tarjeta.torneofechajugador.handicapdejuego|default(tarjeta.torneofechajugador.handicappar3) }}</td>
+							<td style='text-align:center;'>{{ tarjeta.scoreneto|default('-') }}</td>
+						{% endif  %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		
+		{% if (tarjetaJugador.hoyos|length > 9) %}
+			{% set rows = (tarjetaJugador.hoyos|length) / 2 %}
+		{% else %}
+			{% set rows = 9 %}
+		{% endif %}
+
+		<h3 align="center" >Tarjeta para {{ tarjetaJugador.torneofechajugador.jugador.persona.nombrecompleto }}</h3>
+		
+		<table align="center" >
+		<tr>
+			<td>
+				<table border='1' cellspacing='0' cellpadding='4px' >
+					<tr>
+						<th style='text-align:center;' colspan='2'>Ida</th>
+					</tr>
+					<tr>
+						<th style='text-align:center;' >Hoyo</th><th style='text-align:center;' >Golpes</th>
+					</tr>				
+						{% for hoyo in tarjetaJugador.hoyos |slice(0, rows) %}
+							<tr>
+								<td style='text-align:center;'> {{ hoyo.hoyo }} </td>
+								<td style='text-align:center;'> {{ hoyo.golpes }} </td>
+							</tr> 
+						{% endfor %}
+				</table>
+			</td>
+				{% if (tarjetaJugador.hoyos|length > 9) %}
+				<td>
+					<table border='1' cellspacing='0' cellpadding='4px' >
+						<tr>
+							<th style='text-align:center;' colspan='2'>Vuelta</th>
+						</tr>
+						<tr>
+							<th style='text-align:center;' >Hoyo</th><th style='text-align:center;' >Golpes</th>
+						</tr>
+						<tr>
+		
+							{% for hoyo in tarjetaJugador.hoyos |slice(rows, rows) %}
+								<tr>
+									<td style='text-align:center;'> {{ hoyo.hoyo }} </td>
+									<td style='text-align:center;'> {{ hoyo.golpes }} </td>
+								</tr> 
+							{% endfor %}
+						</tr>
+					</table>
+				</td>										
+				{% endif  %} 
+			</tr>
+		</table>
+#}
+	</body>
+</html>

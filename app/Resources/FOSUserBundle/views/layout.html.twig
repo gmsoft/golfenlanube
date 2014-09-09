@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	    <title>{% block title %}Bienvenido!{% endblock %}</title>
+
+	    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+		
+		<!-- Bootstrap -->
+	    <link href="{{ asset('/bundles/golfenlanube/css/bootstrap.css') }}" rel="stylesheet" media="screen">
+	    <link href="{{ asset('/bundles/golfenlanube/css/signin.css') }}" rel="stylesheet" media="screen">
+	    
+	    <!-- link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700,300,600" type="text/css" />
+  		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Comfortaa:400,700,300" type="text/css" / -->
+	    <link href="{{ asset('/bundles/golfenlanube/css/ajustes.css') }}" rel="stylesheet" media="screen"/>
+	    {% block stylesheets %}{% endblock %}
+
+		<!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+	    {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
+	</head>
+	<body>
+	
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color: white">
+		    <div class='container'>
+				<!-- Brand and toggle get grouped for better mobile display -->
+
+	
+			    <!-- Collect the nav links, forms, and other content for toggling -->
+			    <div class="collapse navbar-collapse navbar-ex1-collapse">
+             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                Usuario: {{ app.user.username }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    Salir
+                </a>
+            {% endif %}
+			    
+			    </div><!-- /.navbar-collapse -->
+		    </div>
+		</nav>
+			
+
+
+		<div class='container' style='padding-bottom: 70px;'>
+			<div class='row'>
+				<div class='col-lg-12'>
+					
+					<div class='row'>
+						<div class='col-md-12'>
+					        {% for type, messages in app.session.flashbag.all() %}
+					            {% for message in messages %}
+					                <div class="flash-{{ type }}">
+					                    {{ message }}
+					                </div>
+					            {% endfor %}
+					        {% endfor %}
+						
+						{#% include 'BraincraftedBootstrapBundle::flash.html.twig' with {'close' : true } %#}
+						</div>
+					</div>
+
+        			{% block fos_user_content %}
+		            {% endblock fos_user_content %}
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

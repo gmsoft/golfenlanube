@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>TorneoFechaJugador list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id_torneo_fecha</th>
+                <th>Id_jugador</th>
+                <th>Id_equipo</th>
+                <th>Capitan_equipo</th>
+                <th>Titular</th>
+                <th>Id_club</th>
+                <th>Handicap_par3</th>
+                <th>Handicap_estandar</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('torneofechajugador_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.idtorneofecha }}</td>
+                <td>{{ entity.idjugador }}</td>
+                <td>{{ entity.idequipo }}</td>
+                <td>{{ entity.capitanequipo }}</td>
+                <td>{{ entity.titular }}</td>
+                <td>{{ entity.idclub }}</td>
+                <td>{{ entity.handicappar3 }}</td>
+                <td>{{ entity.handicapestandar }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('torneofechajugador_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('torneofechajugador_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('torneofechajugador_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

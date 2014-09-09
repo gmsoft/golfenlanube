@@ -1,0 +1,32 @@
+<script type="text/javascript">
+$(_upload_ajax_form).on('submit', function (e) 
+	{
+		e.preventDefault();
+		var id_form = $(this).attr('id');
+		var datos = new FormData($(this)[0]);
+		var btn = $(this).find('[type=submit]');
+		var campo_id_documento = $(this).find('input[id$=id_documento]');
+
+	    btn.button('loading');
+
+		$.ajax({
+			url: '{{ path('admin_documento_upload_por_ajax') }}',
+			type: 'POST',
+			contentType: false,
+			processData: false,
+			cache: false, 
+			async: false,
+			data: datos,
+			success: function (response) {
+				$('#mensaje').html('Se han subido el archivo').addClass('alert-success');
+				$(campo_id_documento).val(response);
+			}
+		})
+		.fail(function (xhr, textStatus, errorThrown) {
+			$('#mensaje').html('Ha ocurrido un error. Vuelva a intentar subir el archivo o consulte al administrador. ').addClass('alert-warning').removeClass('hide');
+		})
+		.always(function () {
+		      btn.button('reset');
+	    });
+	});
+</script>

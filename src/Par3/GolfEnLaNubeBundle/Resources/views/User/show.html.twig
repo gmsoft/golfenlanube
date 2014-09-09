@@ -1,0 +1,87 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>{{ entity.persona.nombrecompleto }} </h3>
+	<h4>
+	</h4>
+{% endblock %}
+
+{% block body -%}
+    <div class='row '>
+		<div class='col-lg-6'>
+			<ul class="list-group record_properties"  style='font-size:0.8em'>
+				<li class="list-group-item">Usuario: <strong>{{ entity.username }}</strong> </li>
+				<li class="list-group-item">Email: <strong>{{ entity.email }}</strong> </li>
+				<li class="list-group-item">Habilitado: <strong>{% if entity.enabled == true %}Si{% else %}No{% endif %}</strong> </li>
+				<li class="list-group-item">&Uacute;ltimo ingreso: <strong>{{ entity.lastLogin|date('d-m-Y H:i:s') }}</strong> </li>
+			</ul>
+		</div>
+		<div class='col-lg-6'>
+			<ul class="list-group record_properties"  style='font-size:0.8em'>
+				<li class="list-group-item">Apellido y Nombre: <strong>{{ entity.persona.nombrecompleto }}</strong> </li>
+				<li class="list-group-item">Tipo de documento: <strong>{{ entity.persona.tipodocumento }}</strong> </li>
+				<li class="list-group-item">Nro de documento: <strong>{{ entity.persona.numerodocumento }}</strong> </li>
+				<li class="list-group-item">Sexo: <strong>{{ entity.persona.sexo }}</strong> </li>
+				<li class="list-group-item">Fecha de Nacimiento: <strong>{{ entity.persona.fechanacimiento|date('d-m-Y') }}</strong> </li>
+			</ul>
+		</div>
+	</div>
+
+	<div class='row '>
+		<div class='col-lg-12'>
+		
+			<ul id='resultados' class="nav nav-tabs">
+			  <li class="active"><a href="#perfiles" data-toggle="tab">Perfiles</a></li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+			  <div class="tab-pane active" id="perfiles">
+					<ul class="list-group ">
+						{% for perfil in entity.groups %}
+							<li class="list-group-item">{{ perfil.name }}</li>
+						{% endfor %}
+						{% if is_granted('ROLE_ADMIN_ASIGNAR_PERFILES') %}
+						<li class="list-group-item">
+							<button class='btn btn-default'  data-toggle="modal"  href="{{ path('admin_user_elegir_perfiles', {'id': entity.id }) }}"  data-target="#myModal">Asignar perfiles</button>
+						</li>
+						{% endif %}
+			  		</ul>
+			  </div>
+
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      
+	    </div>
+	  </div>
+	</div>
+	
+	<div class='row '>
+		<div class='col-lg-12'>
+	        <ul class="record_actions list-inline">
+			    <li>
+			        <a href="{{ path('admin_user') }}">
+			            Volver
+			        </a>
+			    </li>
+				{% if is_granted('ROLE_ADMIN_CREAR_USUARIO') %}
+				    <li>
+				        <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
+				            Edit
+				        </a>
+				    </li>
+			    {% endif %}
+
+				{% if is_granted('ROLE_ADMIN_ELIMINAR_USUARIO') %}
+			    	<li>{{ form(delete_form) }}</li>
+			    {% endif %}
+			</ul>
+		</div>
+	</div>
+{% endblock %}

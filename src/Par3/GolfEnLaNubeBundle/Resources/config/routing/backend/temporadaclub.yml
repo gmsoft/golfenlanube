@@ -1,0 +1,47 @@
+admin_temporadaclub:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClub:index" }
+
+admin_temporadaclub_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClub:show" }
+
+admin_temporadaclub_new:
+    pattern:  /new/temporada/{id_temporada}
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClub:new" }
+
+admin_temporadaclub_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClub:create" }
+    requirements: { _method: post }
+
+admin_temporadaclub_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClub:edit" }
+
+admin_temporadaclub_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClub:update" }
+    requirements: { _method: post|put }
+
+admin_temporadaclub_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClub:delete" }
+#    requirements: { _method: post|delete }
+
+admin_temporadaclub_lista_capitanes:
+    pattern:  /{id}/listaCapitanes
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClub:listaCapitanes" }
+
+admin_temporadaclub_quitar_capitan:
+    pattern:  /{id}/quitarCapitan/capitan/{id_usuario_capitan}
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClub:quitarCapitan" }
+
+admin_temporadaclub_agregar_capitan:
+    pattern:  /{id}/agregarCapitan
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClub:agregarCapitan" }
+    requirements: { _method: post|put }
+
+admin_temporadaclub_elegir_nuevo_capitan: 
+    pattern:  /{id}/elegirNuevoCapitan
+    defaults: { _controller: "GolfEnLaNubeBundle:TemporadaClub:elegirNuevoCapitan" }

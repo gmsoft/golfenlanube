@@ -1,0 +1,39 @@
+jugador:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:index" }
+
+jugador_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:show" }
+
+jugador_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:new" }
+
+jugador_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:create" }
+    requirements: { _method: post }
+
+jugador_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:edit" }
+
+jugador_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:update" }
+    requirements: { _method: post|put }
+
+jugador_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:delete" }
+    requirements: { _method: post|delete }
+
+    
+jugador_importar_de_archivo_aag:
+    pattern:  /importar_archivo_aag
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:importarArchivoAag" }
+
+jugador_lista_tarjetas_en_circuito:
+    pattern: /{id}/listaTarjetasEnCircuito/circuito/{id_circuito}
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:listaTarjetasEnCircuito" }

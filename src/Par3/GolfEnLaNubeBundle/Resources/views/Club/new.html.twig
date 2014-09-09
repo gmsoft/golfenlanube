@@ -1,0 +1,24 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+	<link href="{{ asset('/bundles/golfenlanube/css/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block page_header %}
+    <h1>Nuevo Club</h1>
+{% endblock %}
+
+{% block body -%}
+
+    <div class='container'>
+    	{{ form(form, {'style': 'horizontal'}) }}
+    </div>
+    
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_club') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

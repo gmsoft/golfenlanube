@@ -1,0 +1,77 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>{{ jugador.persona.nombrecompleto }} <small>Matr&iacute;cula {{ jugador.matriculaaag }} </small></h3>
+	<h4>Tarjetas | Circuito {{ circuito.nombre }}</h4>
+{% endblock %}
+
+{% block body -%}
+
+	<div class='row '>
+		<div class='col-lg-12'>
+		
+			<ul id='temporadas' class="nav nav-tabs">
+			{% for id_temporada, ts in tarjetas %}
+				{% set temporada = ts.0.torneofechajugador.torneofecha.torneo.temporada %}
+			  <li {% if (loop.index0 == 0) %}class="active"{% endif %}><a href="#temporada{{ id_temporada }}" data-toggle="tab">{{ temporada.nombre }}</a></li>
+			{% endfor %}
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+				{% for id_temporada, ts in tarjetas %}
+					<div class="tab-pane {% if (loop.index0 == 0) %}active{% endif %}" id="temporada{{ id_temporada }}">
+						<div class='table-responsive'>
+						<table class='table table-condensed table-bordered'>
+							<thead>
+								<tr>
+									<th class='text-center'>&nbsp;</th>
+									<th class='text-center'>Fecha</th>
+									<th class='text-center'>Club</th>
+									<th class='text-center'>Cancha</th>
+									<th class='text-center'>HCP de juego</th>
+									<th class='text-center'>Ida</th>
+									<th class='text-center'>Vuelta</th>
+									<th class='text-center'>Gross</th>
+									<th class='text-center'>Puesto</th>
+									<th class='text-center'>Neto</th>
+									<th class='text-center'>Puesto</th>
+									<th class='text-center'>Tarjeta</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for tarjeta in ts %}
+									<tr>
+										<td></td>
+										<td class='col-xs-1 text-center'>{{ tarjeta.torneofechajugador.torneofecha.fecha|date('d-m-Y') }}</td>
+										<td class='col-xs-3'>{{ tarjeta.torneofechajugador.torneofecha.cancha.club.nombre }}</td>
+										<td class='col-xs-1 text-center'>{{ tarjeta.torneofechajugador.torneofecha.cancha.numero}}</td>
+										<td class='col-xs-1 text-center'>{{ tarjeta.torneofechajugador.handicapdejuego }}</td>
+										<td class='col-xs-1 text-center'>{{ tarjeta.totalida }}</td>
+										<td class='col-xs-1 text-center'>{{ tarjeta.totalvuelta }}</td>
+										<td class='col-xs-1 text-center'>{{ tarjeta.scoregross }}</td>
+										<td class='col-xs-1 text-center'>{{ tarjeta.torneofechajugador.posicionporgross }}</td>
+										<td class='col-xs-1 text-center'>{{ tarjeta.scoreneto }}</td>
+										<td class='col-xs-1 text-center'>{{ tarjeta.torneofechajugador.posicionporneto }}</td>
+										<td class='col-xs-1 text-center'>{{ tarjeta.estado }}</td>
+									</tr>
+								{% endfor %}
+							</tbody>						
+						</table>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+	$('#temporadas a').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+	})
+</script>
+{% endblock %}

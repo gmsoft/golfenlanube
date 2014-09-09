@@ -1,0 +1,55 @@
+admin_jugador:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:index" }
+
+admin_jugador_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:show" }
+
+admin_jugador_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:new" }
+
+admin_jugador_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:create" }
+    requirements: { _method: post }
+
+admin_jugador_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:edit" }
+
+admin_jugador_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:update" }
+    requirements: { _method: post|put }
+
+admin_jugador_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:delete" }
+    requirements: { _method: post|delete }
+
+
+admin_jugador_new_archivo_aag:
+    pattern:  /new_archivo_aag
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:newArchivoAag" }
+
+admin_jugador_upload_archivo_aag:
+    pattern:  /upload_archivo_aag
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:uploadArchivoAag" }
+
+
+admin_jugador_importar_de_archivo_aag:
+    pattern:  /importar_archivo_aag
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:importarArchivoAag" }
+    
+########## IMPORTACION ARCHIVOS DE ACTUALIZACION DE HCP Y TARJETAS
+
+admin_jugador_new_archivo_actualizacion_hcp_y_tarjetas:
+    pattern:  /newArchivoActualizacionHcpYTarjetas
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:newArchivoActualizacionHcpYTarjetas" }
+
+admin_jugador_importar_hcp_y_tarjetas_de_archivo:
+    pattern:  /importarHcpYTarjetasDeArchivo
+    defaults: { _controller: "GolfEnLaNubeBundle:Jugador:importarHcpYTarjetasDeArchivo" }
+    

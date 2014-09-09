@@ -1,0 +1,97 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header %}
+	<h3>Torneos</h3>
+	<h4>Cicuito: {{ temporada.circuito.nombre }} <small>|</small> Temporada: {{ temporada.nombre }} &nbsp;<small>{{ temporada.inicio|date('m/Y') }} &nbsp; a &nbsp; {{ temporada.fin|date('m/Y') }}</small></h4>
+{% endblock %}
+
+{% block body -%}
+
+	{{ include( 'GolfEnLaNubeBundle:Temporada:admin_temporada_show_tabs.html.twig', {'id_temporada': temporada.id, 'active_path': 'admin_temporada_show_torneos' } ) }}
+
+	<div class='row'>
+		<div class='col-xs-12'>
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				    	<ul class="nav navbar-nav">
+					    	{% if is_granted('ROLE_ADMIN_CREAR_TORNEO') %}
+					    		<li>
+					    			<button id="agregarTemporadaTorneo" class='btn btn-default navbar-btn btn-primary' >
+					    				Nuevo torneo
+					    			</button>
+				    			</li>
+				    		{% endif %}
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-xs-12'>
+			<table class="records_list table table-striped table-condensed ">
+				<thead>
+					<tr>
+						<th class="text-center">Nombre</th>
+						<th class="text-center">Inicio</th>
+						<th class="text-center">Organiza</th>
+						<th class="text-center">D&iacute;as</th>
+						<th class="text-center">Formato juego</th>
+						<!-- th>Apertura inscripci&oacute;n</th -->
+						<!-- th>Cierre inscripci&oacute;n</th-->
+						<th class="text-center">Tipo torneo</th>
+						<!-- th>Hoyos</th-->
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for entity in entities  %}
+						<tr>
+							<td>{{ entity.nombre }}</td>
+							<td class="text-center">{% if entity.inicio %}{{ entity.inicio|date('d-m-Y') }}{% endif %}</td>
+							<td  class="text-center">{{ entity.institucion }}</td>
+							<td class="text-center">{{ entity.fechas|length }}</td>
+							<td class="text-center">{{ entity.formatojuego }}</td>
+			
+							<!-- td>{% if entity.aperturainscripcion %}{{ entity.aperturainscripcion|date('d-m-Y') }}{% endif %}</td -->
+							<!-- td>{% if entity.cierreinscripcion %}{{ entity.cierreinscripcion|date('d-m-Y') }}{% endif %}</td -->
+							<td class="text-center">{{ entity.tipotorneo|humanize }}</td>
+							<!-- td>{#{ entity.hoyospordia }#}</td -->
+							<td>
+								<ul  class='list-inline'>
+									<li>
+										<a href="{{ path('admin_torneo_show', { 'id': entity.id }) }}" class='btn btn-default  btn-sm'>{{ icon('edit') }} Fechas</a>
+									</li>
+								</ul>
+							</td>
+						</tr>
+					{% for fecha in entity.fechas  %}
+						<tr >
+							<td>&nbsp;</td>
+							<td>{{ loop.index }}&deg; d&iacute;a</td>
+							<td colspan="8"> 
+								juega el <strong>{{ fecha.fecha|date('d-m-Y') }}</strong>
+								en <strong>{{ fecha.cancha.club }}</strong>, cancha <strong>{{ fecha.cancha.numero }}</strong> 
+								{% if (fecha.salidassimultaneas == 1) %}con salidas simult&aacute;neas{% else %}No{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+{% endblock  %}
+
+{% block javascripts %}
+
+	<script type="text/javascript">
+		$('button#agregarTemporadaTorneo').on('click', function () { 
+			document.location.href='{{ path('admin_torneo_new', { 'id_temporada': temporada.id})  }}';
+		});
+	</script>
+
+{% endblock %}

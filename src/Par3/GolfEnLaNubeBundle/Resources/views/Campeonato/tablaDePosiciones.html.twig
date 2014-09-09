@@ -1,0 +1,88 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>Campeonato {{ entity.nombre }} <small>Tabla de Posiciones</small></h3>
+	<h4>Temporada {{ entity.temporada.nombre }}</h4>
+{% endblock %}
+
+{% block body -%}
+
+{% if totales_por_fecha|length > 0 %}
+	<div class='row'>
+		<div class='col-lg-12'>
+			<div class='table-responsive'>
+				<table class="records_list table table-condensed table-striped">
+			        <thead>
+			            <tr>
+			                <th  class='text-center info'>Pos</th>
+			                <th  class='text-center info'>Club</th>
+			                {% for key in (totales_por_fecha|first)|keys%}
+			                	<th  class='text-center warning'>{{ key }}</th>
+			                {% endfor %}
+			            </tr>
+			        </thead>
+			        <tbody>
+			        {% for club, puntajes in totales_por_fecha  %}
+			            <tr>
+			                <td  class='text-center success'>{{ loop.index }}</td>
+			                <td  >{{ club }}</td>
+			               	{% for puntaje in puntajes %}
+			                	<td  class="text-center">
+			                		{%  if loop.index == 1 %}
+			                			<strong>{{ puntaje }}</strong>
+			                		{% else  %}
+			                			{{ puntaje }}
+			                		{% endif  %}
+			                	</td>
+			                {% endfor %}
+			            </tr>
+			        {% endfor %}
+			        </tbody>
+			    </table>
+		    </div>
+		</div>
+	</div>
+{% endif %}
+
+{% if totales_por_campeonato|length > 0 %}
+	<div class='row'>
+		<div class='col-lg-8'>
+			<div class='table-responsive'>
+				<table class="records_list table table-striped">
+			        <thead>
+			            <tr>
+			                <th class='info text-center' >Pos</th>
+			                <th class='info text-center' >Club</th>
+			                {% for campeonato in (totales_por_campeonato|first)|keys%}
+			                	<th class='warning text-center' >{{ campeonato}}</th>
+			                {% endfor %}
+			            </tr>
+			        </thead>
+			        <tbody>
+			        {% for club, puntajes in totales_por_campeonato%}
+			            <tr >
+			                <td class='success text-center'>{{ loop.index }}</td>
+			                <td class="text-center">{{ club }}</td>
+			               	{% for puntaje in puntajes %}
+				                <td  class="text-center">
+									{%  if loop.index == 1 %}
+			                			<strong>{{ puntaje }}</strong>
+			                		{% else  %}
+			                			{{ puntaje }}
+			                		{% endif  %}
+				                </td>
+			                {% endfor %}
+			            </tr>
+			        {% endfor %}
+			        </tbody>
+			    </table>
+		    </div>
+		</div>
+	</div>
+{% endif %}
+
+{% endblock %}
+
+    
+{% block javascripts %}
+{% endblock %}

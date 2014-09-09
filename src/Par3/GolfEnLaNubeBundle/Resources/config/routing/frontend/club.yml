@@ -1,0 +1,39 @@
+club:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Club:index" }
+
+club_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Club:show" }
+
+club_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:Club:new" }
+
+club_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Club:create" }
+    requirements: { _method: post }
+
+club_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Club:edit" }
+
+club_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Club:update" }
+    requirements: { _method: post|put }
+
+club_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Club:delete" }
+    requirements: { _method: post|delete }
+
+club_importar_de_archivo_aag:
+    pattern: /importar_archivo_aag
+    defaults: { _controller: "GolfEnLaNubeBundle:Club:importarArchivoAag" }
+
+club_importar_canchas_de_archivo_aag:
+    pattern: /importar_canchas_archivo_aag
+    defaults: { _controller: "GolfEnLaNubeBundle:Club:importarCanchasArchivoAag" }
+    

@@ -1,0 +1,71 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+
+{% block page_header -%}
+	<h3>Torneos por jugar - Configuración equipos</h3>
+	<h4>	
+		Circuito {{ temporada.circuito.nombre }}<small> - </small>Temporada {{ temporada.nombre }} 
+	</h4>
+{% endblock %}
+
+{% block body -%}
+
+	<div class='hidden'>
+		{#{ form(delete_tarjeta_form, {attr : { 'id': 'form_delete_tarjeta'}}) }#}
+	</div>
+	
+	<div class='row '>
+		<div class='col-lg-12'>
+
+			<div class='table-responsive'>
+				<table class='table table-condensed'>
+
+				<thead>
+					<tr>
+						<th class="text-center">Torneo</th>
+						<th class="text-center">Fecha</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					{% for fecha in fechas %}
+						<tr>
+							<td>
+								{{ fecha.torneo.nombre }}
+							</td>
+							<td class="text-center">{{ fecha.fecha|date('d-m-Y') }}</td>
+							<td>
+								{% if  is_granted('ROLE_ADMIN_CREAR_EQUIPO') %}
+									<a href='{{ path('admin_temporada_lista_equipos_por_torneo_fecha', { 'id_torneo_fecha': fecha.id}) }}' class='btn btn-default' > 
+										Configurar equipos
+									</a>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+				</table>
+			</div>
+		
+		</div>
+	</div>
+
+
+	<div class='row '>
+		<div class='col-lg-12'>
+			<ul class="list-inline record_actions">
+				<li>
+					<!-- a href="#">Volver</a -->
+			    </li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+
+	<script type="text/javascript">
+
+	</script>
+{% endblock %}

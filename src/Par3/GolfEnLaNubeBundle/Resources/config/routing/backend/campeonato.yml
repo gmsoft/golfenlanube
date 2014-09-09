@@ -1,0 +1,50 @@
+admin_campeonato:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:index" }
+
+admin_campeonatos_por_temporada:
+    pattern:  /temporada/{id_temporada}
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:listaPorTemporada" }
+
+admin_campeonato_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:show" }
+
+admin_campeonato_new:
+    pattern:  /new/temporada/{id_temporada}
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:new" }
+
+admin_campeonato_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:create" }
+    requirements: { _method: post }
+
+admin_campeonato_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:edit" }
+
+admin_campeonato_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:update" }
+    requirements: { _method: post|put }
+
+admin_campeonato_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:delete" }
+    requirements: { _method: post|delete }
+
+admin_campeonato_seleccionar_campeonatos:
+    pattern:  /{id}/seleccionarCampeonatos
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:seleccionarCampeonatos" }
+
+admin_campeonato_seleccionar_torneos:
+    pattern:  /{id}/seleccionarTorneos
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:seleccionarTorneos" }
+
+admin_campeonato_adjuntar_campeonatos:
+    pattern:  /{id}/adjuntarCampeonatos
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:adjuntarCampeonatos" }
+
+admin_campeonato_adjuntar_torneos:
+    pattern:  /{id}/adjuntarTorneos
+    defaults: { _controller: "GolfEnLaNubeBundle:Campeonato:adjuntarTorneos" }

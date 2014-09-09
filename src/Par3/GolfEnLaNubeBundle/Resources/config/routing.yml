@@ -1,0 +1,25 @@
+golf_backend:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/routing_backend.yml"
+    prefix:   /admin
+
+golf_frontend:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/routing_frontend.yml"
+    prefix:   /
+
+_welcome:
+    pattern:  /
+    defaults: { _controller: GolfEnLaNubeBundle:User:home }
+
+_home:
+    pattern:  /home
+    defaults: { _controller: GolfEnLaNubeBundle:Default:home }
+    
+_test:
+    pattern:  /test
+    defaults: { _controller: GolfEnLaNubeBundle:Default:test }
+    
+
+
+#_welcome:
+#    pattern:  /
+#    defaults: { _controller: GolfEnLaNubeBundle:User:home }

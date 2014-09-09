@@ -1,0 +1,25 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>Nuevo Formato de juego</h3>
+{% endblock %}
+
+{% block body -%}
+	<div class='row'>
+		<div class='col-md-12'>
+   			 {{ form(form) }}
+   		</div>
+   	</div>
+
+   	<div class='row'>
+		<div class='col-md-12'>
+        	<ul class="record_actions">
+			    <li>
+			        <a href="{{ path('admin_formatojuego') }}">
+			            Volver
+			        </a>
+			    </li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}

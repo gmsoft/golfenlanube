@@ -1,0 +1,44 @@
+{{ form_start(form, {'style': 'horizontal'}) }}
+	{{ form_errors(form) }}
+	{% set fecha = form.fechas.0 %}
+	{{ bootstrap_set_label_col(4) }}
+	{{ bootstrap_set_widget_col(8) }}  
+
+	{{ form_row(form.nombre)  }}
+	
+	{{ form_row(form.total_hoyos) }}
+	
+	{{ form_row(form.apertura_inscripcion)  }}
+	
+	{{ form_row(form.cierre_inscripcion)  }}
+
+	{{ form_row(form.inicio)  }}
+	
+	{{ form_row(form.titulares_por_club)  }}
+
+	{{ form_row(form.suplentes_por_club)  }}
+	
+	{{ form_row(form.institucion)  }}
+	
+	{{ form_row(form.formato_juego)  }}
+	
+	{{ form_row(fecha.jugadores_por_linea)  }}
+	
+	<div class='form-group'>
+		<label class="control-label col-md-4 required" >Salidas simult&aacute;neas</label>
+		<div class='col-md-8'>
+			{{ form_widget(fecha.salidas_simultaneas)  }}
+		</div>
+	</div>
+	
+	{{ form_row(fecha.cancha)  }}
+	
+	
+	{{ form_widget(form.submit) }}
+
+	<!-- hidden -->
+	{{ form_widget(form.temporada) }}
+	{{ form_widget(fecha.hoyos)  }}
+	{{ form_widget(form._token) }}
+	{{ form_widget(form.dias) }}
+</form>

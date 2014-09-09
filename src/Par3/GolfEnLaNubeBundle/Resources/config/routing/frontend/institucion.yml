@@ -1,0 +1,30 @@
+institucion:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Institucion:index" }
+
+institucion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Institucion:show" }
+
+institucion_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:Institucion:new" }
+
+institucion_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Institucion:create" }
+    requirements: { _method: post }
+
+institucion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Institucion:edit" }
+
+institucion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Institucion:update" }
+    requirements: { _method: post|put }
+
+institucion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Institucion:delete" }
+    requirements: { _method: post|delete }

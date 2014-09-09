@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Persona list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id_usuario</th>
+                <th>Nombre_completo</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Sexo</th>
+                <th>Fecha_nacimiento</th>
+                <th>Tipo_documento</th>
+                <th>Numero_documento</th>
+                <th>Telefonos</th>
+                <th>Pendiente_actualizacion</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('persona_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.idusuario }}</td>
+                <td>{{ entity.nombrecompleto }}</td>
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.apellido }}</td>
+                <td>{{ entity.sexo }}</td>
+                <td>{% if entity.fechanacimiento %}{{ entity.fechanacimiento|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.tipodocumento }}</td>
+                <td>{{ entity.numerodocumento }}</td>
+                <td>{{ entity.telefonos }}</td>
+                <td>{{ entity.pendienteactualizacion }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('persona_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('persona_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('persona_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

@@ -1,0 +1,30 @@
+admin_cancha:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Cancha:index" }
+
+admin_cancha_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Cancha:show" }
+
+admin_cancha_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:Cancha:new" }
+
+admin_cancha_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Cancha:create" }
+    requirements: { _method: post }
+
+admin_cancha_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Cancha:edit" }
+
+admin_cancha_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Cancha:update" }
+    requirements: { _method: post|put }
+
+admin_cancha_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Cancha:delete" }
+    requirements: { _method: post|delete }

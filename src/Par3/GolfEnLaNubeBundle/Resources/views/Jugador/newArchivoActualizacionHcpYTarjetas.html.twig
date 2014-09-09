@@ -1,0 +1,69 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header %}
+	<h3>Importar actualizaciones de Handicaps y Tarjetas desde archivo</h3>
+{% endblock %}
+
+{% block body -%}
+
+	<div class='row'>
+		<div class='col-lg-12'>
+			<div id='mensaje' class='alert hide'></div>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-lg-12'>
+			<h5>Seleccione el archivo a importar. Corrobore que el formato del mismo sea el correcto:</h5>
+			<h6>matricula;vigencia;club;hcp std; hcp par3; tarjetas std; tarjetas par3</h6>
+			<form action='{{ form.vars.action }}' id='form_jugadores'  class='form-inline'>
+			    {{ bootstrap_set_style('inline') }}
+				{{ form_row(form.file) }}
+				{{ form_row(form.submit) }}
+				{{ form_widget(form.name) }}
+				{{ form_widget(form.id_documento, {attr: {'data-tipo': 'actualizacion'}}) }}
+				{{ form_widget(form._token) }}
+			</form>
+					</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-lg-12'>
+			<button id='btn_importar' data-loading-text="Importando..."  class='btn btn-default'>Importar</button>
+		</div>
+	</div>
+
+{% endblock  %}
+
+{% block javascripts %}
+
+	<script type="text/javascript"> 
+	
+		$('#btn_importar').on('click', function () 
+			{
+				var id_documento = $('[data-tipo=actualizacion]').val();
+				var btn = $(this);
+			    btn.button('loading');
+				$.ajax({
+					url: '{{ path('admin_jugador_importar_hcp_y_tarjetas_de_archivo') }}',
+					data: {
+						'id_documento': id_documento,
+						},
+					success: function (response) {
+						$('#mensaje').html('Se han importado ' + response + 'jugadores').addClass('alert-success');
+					}
+				})
+				.fail(function (xhr, textStatus, errorThrown) {
+					$('#mensaje').html('Ha ocurrido un error. Vuelva a intentar importar el archivo o consulte al administrador. ').addClass('alert-warning').removeClass('hide');
+				})
+				.always(function () {
+				      btn.button('reset');
+			    });
+			});
+	
+		var _upload_ajax_form = 'form';
+		
+	</script>
+
+	{{ include('GolfEnLaNubeBundle:Documento:upload_por_ajax.js.twig') }} 
+{% endblock %}

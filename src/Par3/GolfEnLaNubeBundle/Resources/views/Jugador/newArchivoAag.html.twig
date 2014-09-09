@@ -1,0 +1,114 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header %}
+	<h3>Importar Jugadores de archivo inicial del M&oacute;dulo Club AAG</h3>
+{% endblock %}
+
+{% block body -%}
+
+	<div class='row'>
+		<div class='col-lg-12'>
+			<div id='mensaje' class='alert hide'></div>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-lg-12'>
+			<h4>La importación puede tardar varios minutos, dependiendo del tamaño del archivo tal vez hasta media hora. Sea paciente. </h4>
+			<h5>Archivo de actualizacion de Handicaps (INI_JUGA_HCP)</h5>
+			<form action='{{ form_juga_hcp.vars.action }}' id='form_jugadores'  class='form-inline'>
+			    {{ bootstrap_set_style('inline') }}
+				{{ form_row(form_juga_hcp.file) }}
+				{{ form_row(form_juga_hcp.submit) }}
+				{{ form_widget(form_juga_hcp.name) }}
+				{{ form_widget(form_juga_hcp.tipo) }}
+				{{ form_widget(form_juga_hcp.id_documento, {attr: {'data-tipo': 'juga_hcp'}}) }}
+				{{ form_widget(form_juga_hcp._token) }}
+			</form>
+					</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-lg-12'>
+			<h5>Archivo de actualizacion de datos personales (INI_JUGADORES)</h5>
+			<form action='{{ form_jugadores.vars.action }}' id='form_jugadores'  class='form-inline'>
+			    {{ bootstrap_set_style('inline') }}
+				{{ form_row(form_jugadores.file) }}
+				{{ form_row(form_jugadores.submit) }}
+				{{ form_widget(form_jugadores.name) }}
+				{{ form_widget(form_jugadores.tipo) }}
+				{{ form_widget(form_jugadores.id_documento, {attr: {'data-tipo': 'jugadores'}}) }}
+				{{ form_widget(form_jugadores._token) }}
+			</form>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-lg-12'>
+			<button id='btn_importar' data-loading-text="Importando..."  class='btn btn-default'>Importar</button>
+		</div>
+	</div>
+
+{% endblock  %}
+
+{% block javascripts %}
+<script type="text/javascript"> 
+
+	$('#btn_importar').on('click', function () 
+		{
+			var id_documento_juga_hcp = $('[data-tipo=juga_hcp]').val();
+			var id_documento_jugadores = $('[data-tipo=jugadores]').val(); 
+			var btn = $(this);
+		    btn.button('loading');
+			$.ajax({
+				url: '{{ path('admin_jugador_importar_de_archivo_aag') }}',
+				data: {
+					'id_documento_juga_hcp': id_documento_juga_hcp,
+					'id_documento_jugadores': id_documento_jugadores,
+					},
+				success: function (response) {
+					$('#mensaje').html('Se han importado ' + response + ' jugadores').addClass('alert-success');
+				}
+			})
+			.fail(function (xhr, textStatus, errorThrown) {
+				$('#mensaje').html('Ha ocurrido un error. Vuelva a intentar importar el archivo o consulte al administrador. ').addClass('alert-warning').removeClass('hide');
+			})
+			.always(function () {
+			      btn.button('reset');
+		    });
+		});
+
+
+		$('form').on('submit', function (e) 
+			{
+				e.preventDefault();
+				var id_form = $(this).attr('id');
+				var datos = new FormData($(this)[0]);
+				var btn = $(this).find('[type=submit]');
+				var campo_id_documento = $(this).find('input[id$=id_documento]');
+
+			    btn.button('loading');
+
+				$.ajax({
+					url: '{{ path('admin_jugador_upload_archivo_aag') }}',
+					type: 'POST',
+					contentType: false,
+					processData: false,
+					cache: false, 
+					async: false,
+					data: datos,
+					success: function (response) {
+						$('#mensaje_' + id_form).html('Se han subido el archivo').addClass('alert-success');
+						$(campo_id_documento).val(response);
+					}
+				})
+				.fail(function (xhr, textStatus, errorThrown) {
+					$('#mensaje_' + id_form).html('Ha ocurrido un error. Vuelva a intentar subir el archivo o consulte al administrador. ').addClass('alert-warning').removeClass('hide');
+				})
+				.always(function () {
+				      btn.button('reset');
+			    });
+			});
+		
+</script> 
+{% endblock %}

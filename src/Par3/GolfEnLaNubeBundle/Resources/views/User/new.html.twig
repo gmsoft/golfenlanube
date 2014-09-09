@@ -1,0 +1,53 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+	<link href="{{ asset('/bundles/golfenlanube/css/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2-bootstrap.css') }}" rel="stylesheet" />
+	{{ form_stylesheet(form) }}
+{% endblock %}
+
+{% block page_header -%}
+	<h3>Nuevo Usuario</h3>
+{% endblock %}
+
+{% block body %}
+
+	<div class='row'>
+		<div class='col-lg-6'>
+			{{ include( 'GolfEnLaNubeBundle:User:form.html.twig', {'form': form } ) }}
+    		{#{ form(form, {style:'horizontal'}) }#}
+    	</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-md-8'>
+    		<ul class="record_actions list-inline">
+		    <li>
+		        <a href="{{ path('admin_user') }}">
+		            Volver
+		        </a>
+		    </li>
+		</ul>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('/bundles/golfenlanube/js/jquery-ui-1.10.4.custom.min.js') }}" ></script>
+	<script src="{{ asset('/bundles/golfenlanube/js/select2/select2.min.js') }}" ></script>
+	{{ form_javascript(form) }}
+	<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $field = $('#par3_golfenlanubebundle_user_persona_fecha_nacimiento');
+  
+        var $configs = $.extend({
+            dateFormat:"dd-mm-yy", 
+            yearRange: '-100:+0', 
+            changeYear: true
+        }, $.datepicker.regional['es']);
+
+        $field.datepicker($configs);	
+    });
+    </script>
+{% endblock %}

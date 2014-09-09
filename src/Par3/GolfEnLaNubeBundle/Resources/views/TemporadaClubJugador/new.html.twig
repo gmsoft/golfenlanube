@@ -1,0 +1,38 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+	<link href="{{ asset('/bundles/golfenlanube/css/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2-bootstrap.css') }}" rel="stylesheet" />
+	{{ form_stylesheet(form) }}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('/bundles/golfenlanube/js/jquery-ui-1.10.4.custom.min.js') }}" ></script>
+	<script src="{{ asset('/bundles/golfenlanube/js/select2/select2.min.js') }}" ></script>
+	{{ form_javascript(form) }}
+{% endblock %}
+
+{% block page_header -%}
+	<h3>Agregar jugador a lista de buena fe</h3>
+{% endblock %}
+
+{% block body %}
+	<div class='row'>
+		<div class='col-md-6'>
+    		{{ form(form) }}
+		</div>
+	</div>
+    <div class='row'>
+		<div class='col-md-6'>
+    
+        	<ul class="record_actions list-inline">
+			    <li>
+			        <a href="{{ path('admin_temporada_show_lista_buena_fe_por_temporada_club', {'id_temporada': entity.temporadaclub.idtemporada, 'id_temporada_club': entity.temporadaclub.id }) }}">
+			            Volver
+			        </a>
+			    </li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}

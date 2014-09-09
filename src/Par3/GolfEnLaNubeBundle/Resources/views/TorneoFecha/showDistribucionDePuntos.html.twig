@@ -1,0 +1,30 @@
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<!-- List group -->
+		<div class='table-responsive'>
+			<table class="table table-condensed table-striped">
+				<thead>
+					<tr>
+						<th class="text-center">Posici&oacute;n</th>
+						<th class="text-center">Club</th>
+						<th class="text-center">Totales</th>
+						<th class="text-center">Participaci&oacute;n</th>
+						<th class="text-center">Scores<br/>individuales</th>
+						<th class="text-center">Resultados por Club</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for equipo in entity.getEquiposOrderByPuntosPorPuntajeTotal %}
+						<tr>
+							<td class="text-center">{{ loop.index }}</td>
+							<td>{{ equipo.temporadaclub }}</td>
+							<td class="text-center">{{ equipo.puntajetotal }}</td>
+							<td class="text-center">{{ equipo.puntosporparticipacion }}</td>
+							<td class="text-center">{{ equipo.puntosporgrossindividuales }}</td>
+							<td class="text-center">{{ equipo.puntosporposicion }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>

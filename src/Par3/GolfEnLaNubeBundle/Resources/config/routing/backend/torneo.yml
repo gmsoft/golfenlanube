@@ -1,0 +1,30 @@
+admin_torneo:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Torneo:index" }
+
+admin_torneo_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Torneo:show" }
+
+admin_torneo_new:
+    pattern:  /new/temporada/{id_temporada}
+    defaults: { _controller: "GolfEnLaNubeBundle:Torneo:new" }
+
+admin_torneo_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Torneo:create" }
+    requirements: { _method: post }
+
+admin_torneo_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Torneo:edit" }
+
+admin_torneo_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Torneo:update" }
+    requirements: { _method: post|put }
+
+admin_torneo_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Torneo:delete" }
+    requirements: { _method: post|delete }

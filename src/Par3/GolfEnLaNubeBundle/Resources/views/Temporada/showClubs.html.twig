@@ -1,0 +1,70 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header %}
+	<h3>Clubs participantes</h3>
+	<h4>Cicuito: {{ temporada.circuito.nombre }} <small>|</small> Temporada: {{ temporada.nombre }} &nbsp;<small>{{ temporada.inicio|date('m/Y') }} &nbsp; a &nbsp; {{ temporada.fin|date('m/Y') }}</small></h4>
+{% endblock %}
+
+{% block body -%}
+
+	{{ include( 'GolfEnLaNubeBundle:Temporada:admin_temporada_show_tabs.html.twig', {'id_temporada': temporada.id, 'active_path': 'admin_temporada_show_clubs' } ) }}
+
+
+	<div class='row'>
+		<div class='col-xs-12'>
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				    	<ul class="nav navbar-nav">
+				    		<li>
+				    			{% if is_granted('ROLE_ADMIN_AGREGAR_CLUB_A_TEMPORADA') %}
+					    			<button data-button-link='{{ path('admin_temporadaclub_new', { 'id_temporada': temporada.id}) }}' class='btn btn-default navbar-btn btn-primary' >
+					    				Incluir club en la temporada
+					    			</button>
+				    			{% endif %}
+			    			</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-xs-8'>
+			<table class="records_list table table-striped table-condensed ">
+				<thead>
+					<tr>
+						<th class="text-center">Nombre</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for tc in temporada_clubs %}
+					<tr>
+						<td>{{  tc }}</td>
+						<td>
+							{% if is_granted('ROLE_ADMIN_ELIMINAR_TEMPORADA_CLUB') %}
+							<a href="{{ path('admin_temporadaclub_delete', { 'id': tc.id}) }}" class='btn btn-default  btn-sm'>
+								{{ icon('remove') }} Eliminar
+							</a>
+							{% endif %}
+							{% if is_granted('ROLE_ADMIN_DESIGNAR_CAPITANES') %}
+							<a href="{{ path('admin_temporadaclub_lista_capitanes', { 'id': tc.id}) }}" class='btn btn-default  btn-sm'>
+								{{ icon('bookmark') }} Capitanes
+							</a>
+							{% endif %}
+							{% if is_granted('ROLE_VER_LISTA_BUENA_FE') and app.user.escapitandetemporadaclub(tc.id) %}
+								<a href="{{ path('admin_temporada_show_lista_buena_fe_por_temporada_club', { 'id_temporada': temporada.id, 'id_temporada_club': tc.id}) }}" class='btn btn-default  btn-sm'>
+									{{ icon('list') }} Ver lista de buena fe
+								</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+{% endblock  %}

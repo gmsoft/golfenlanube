@@ -1,0 +1,61 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header %}
+	<h3>Capitanes </h3>
+	<h4>Club: {{ temporada_club.club.nombre }} - Temporada: {{ temporada_club.temporada.nombre }}  Circuito {{ temporada_club.temporada.circuito.nombre }}</h4>
+
+{% endblock %}
+
+{% block body -%}
+
+
+	<div class='row'>
+		<div class='col-xs-12'>
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				    	<ul class="nav navbar-nav">
+							{% if is_granted('ROLE_ADMIN_DESIGNAR_CAPITANES') %}
+				    			<li>
+					    			<button id="agregarTemporadaTorneo" class='btn btn-default navbar-btn ' data-button-link='{{ path('admin_temporadaclub_elegir_nuevo_capitan', {'id': temporada_club.id}) }}'>
+					    				Asignar nuevo capitan
+					    			</button>
+					    			
+				    			</li>
+				    		{% endif %}
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-lg-6'>
+			<table class="records_list table table-condensed ">
+		        <thead>
+		            <tr>
+		            	<th>Matr&iacute;cula</th>
+		            	<th>Nombre</th>
+		            	<th>&nbsp;</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		        {% for capitan in temporada_club.capitanes %}
+		            <tr>
+		            	<td>{{ capitan.persona.jugador.id }}</td>
+						<td>{{ capitan.persona.nombrecompleto }}</td>
+						<td>
+							{% if is_granted('ROLE_ADMIN_DESIGNAR_CAPITANES') %}
+								<a href='{{ path('admin_temporadaclub_quitar_capitan', {'id': temporada_club.id, 'id_usuario_capitan': capitan.id}) }}' class='btn btn-default btn-sm'>
+									{{ icon('remove') }} Quitar
+								</a>
+							{% endif %}
+						</td>
+		            </tr>
+		        {% endfor %}
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+
+{% endblock %}

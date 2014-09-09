@@ -1,0 +1,5 @@
+_assetic:
+    resource: .
+    type: assetic
+_app:
+    resource: 'D:/Dropbox/proyectos/webs/circuitopar3/app/config/routing_dev.yml'

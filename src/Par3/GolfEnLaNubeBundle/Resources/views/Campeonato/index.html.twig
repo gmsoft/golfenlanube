@@ -1,0 +1,75 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>Campeonatos en esta temporada</h3>
+	<h4>{{ temporada.circuito.nombre }} {{ temporada.nombre }}</h4>
+{% endblock %}
+
+{% block body -%}
+
+	{{ include( 'GolfEnLaNubeBundle:Temporada:admin_temporada_show_tabs.html.twig', {'id_temporada': temporada.id, 'active_path': 'admin_campeonatos_por_temporada' } ) }}
+
+	<div class='row'>
+		<div class='col-lg-12'>
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				    	<ul class="nav navbar-nav">
+				    		{% if is_granted('ROLE_ADMIN_CREAR_CAMPEONATO') %}
+				    		<li>
+				    			<button id="agregarCampeonatoTorneo" class='btn btn-default navbar-btn btn-primary' >
+				    				Nuevo campeonato
+				    			</button>
+			    			</li>
+			    			{% endif %}
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-lg-8'>
+			<div class='table-responsive'>
+				<table class="records_list table table-condensed ">
+	
+			        <thead>
+			            <tr>
+			                <th class="text-center">Nombre</th>
+			                <th class="text-center">Campeonatos</th>
+			                <th class="text-center">Torneos</th>
+			                <th>Forma parte de</th>
+			                <th>&nbsp;</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			        {% for entity in entities %}
+			            <tr class='active'>
+			                <td>{{ entity.nombre }}</td>
+			                <td class="text-center">{{ entity.campeonatos|length }}</td>
+			                <td class="text-center">{{ entity.torneos|length }}</td>
+			                <td>{% if entity.padre is not null  %}Campeonato {{ entity.padre.nombre }}{% endif %}</td>
+			                <td >
+		                        <a href="{{ path('admin_campeonato_show', { 'id': entity.id }) }}" class='btn btn-default '>{{ icon("list") }} Detalles</a>
+			                </td>
+			            </tr>
+			        {% endfor %}
+			        </tbody>
+			    </table>
+		    </div>
+		</div>
+	</div>
+	
+{% endblock %}
+
+    
+{% block javascripts %}
+
+	<script type="text/javascript">
+		$('button#agregarCampeonatoTorneo').on('click', function () { 
+			document.location.href='{{ path('admin_campeonato_new', { 'id_temporada': temporada.id, })  }}';
+		});
+	</script>
+
+{% endblock %}

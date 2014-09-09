@@ -1,0 +1,18 @@
+{{ form_start(form) }}
+
+	<div style='display:none' id='prototype-data' data-prototype="{{ form_widget(form.canchas.vars.prototype)|e }}" ></div>
+
+	{{ form_row(form.nombre)  }}
+	
+	<h3>Canchas</h3>
+
+	{% for cancha in form.canchas %}
+	
+		{{ form_row(cancha.nombre) }}
+	
+	{% endfor %}
+
+	{{ form_widget(form.submit) }}
+
+	{{ form_widget(form._token) }}
+</form>

@@ -1,0 +1,42 @@
+admin_torneofecha:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:index" }
+
+admin_torneofecha_lista_jugadores_cargar_tarjetas:
+    pattern:  /{id_torneo_fecha}/listaJugadoresCargarTarjetas
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:listaJugadoresCargarTarjetas" }
+
+admin_torneofecha_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:show" }
+
+admin_torneofecha_new:
+    pattern:  /new/torneo/{id_torneo}
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:new" }
+
+admin_torneofecha_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:create" }
+    requirements: { _method: post }
+
+admin_torneofecha_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:edit" }
+
+admin_torneofecha_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:update" }
+    requirements: { _method: post|put }
+
+admin_torneofecha_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:delete" }
+    requirements: { _method: post|delete }
+
+admin_torneofecha_habilitar_carga_tarjetas:
+    pattern: /{id_torneo_fecha}/habilitarCarga/{habilitar}
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:habilitarCargaTarjetas" } 
+    
+admin_torneofecha_comunicar_resultados_por_mail:
+    pattern: /{id_torneo_fecha}/comunicarResultadosPorMail
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:comunicarResultadosPorMail" } 

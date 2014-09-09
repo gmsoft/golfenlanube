@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>TorneoFecha list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id_torneo</th>
+                <th>Id_club</th>
+                <th>Fecha</th>
+                <th>Categorias_masculinas</th>
+                <th>Categorias_femeninas</th>
+                <th>Jugadores_por_linea</th>
+                <th>Salidas_simultaneas</th>
+                <th>Ultima_salida</th>
+                <th>Frecuencia_salida</th>
+                <th>Suspendido</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('admin_torneofecha_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.idtorneo }}</td>
+                <td>{{ entity.idclub }}</td>
+                <td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.categoriasmasculinas }}</td>
+                <td>{{ entity.categoriasfemeninas }}</td>
+                <td>{{ entity.jugadoresporlinea }}</td>
+                <td>{{ entity.salidassimultaneas }}</td>
+                <td>{{ entity.ultimasalida }}</td>
+                <td>{{ entity.frecuenciasalida }}</td>
+                <td>{{ entity.suspendido }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_torneofecha_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_torneofecha_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('admin_torneofecha_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

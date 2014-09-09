@@ -1,0 +1,30 @@
+persona:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Persona:index" }
+
+persona_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Persona:show" }
+
+persona_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:Persona:new" }
+
+persona_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Persona:create" }
+    requirements: { _method: post }
+
+persona_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Persona:edit" }
+
+persona_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Persona:update" }
+    requirements: { _method: post|put }
+
+persona_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Persona:delete" }
+    requirements: { _method: post|delete }

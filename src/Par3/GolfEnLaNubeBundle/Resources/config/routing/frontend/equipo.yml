@@ -1,0 +1,30 @@
+equipo:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Equipo:index" }
+
+equipo_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Equipo:show" }
+
+equipo_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:Equipo:new" }
+
+equipo_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Equipo:create" }
+    requirements: { _method: post }
+
+equipo_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Equipo:edit" }
+
+equipo_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Equipo:update" }
+    requirements: { _method: post|put }
+
+equipo_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Equipo:delete" }
+    requirements: { _method: post|delete }

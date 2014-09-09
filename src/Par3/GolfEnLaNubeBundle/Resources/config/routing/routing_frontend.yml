@@ -1,0 +1,58 @@
+golf_en_la_nube_homepage:
+    pattern:  /golf
+    defaults: { _controller: GolfEnLaNubeBundle:Default:index }
+
+golf_institucion:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/institucion.yml"
+    prefix:   /institucion
+
+golf_formato_juego:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/formatojuego.yml"
+    prefix:   /formatojuego
+
+golf_club:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/club.yml"
+    prefix:   /club
+
+golf_cancha:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/cancha.yml"
+    prefix:   /cancha
+
+golf_torneo:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/torneo.yml"
+    prefix:   /torneo
+
+golf_torneo_fecha:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/torneofecha.yml"
+    prefix:   /torneofecha
+
+golf_tarjeta:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/tarjeta.yml"
+    prefix:   /tarjeta
+
+golf_circuito:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/circuito.yml"
+    prefix:   /circuito
+
+golf_temporada:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/temporada.yml"
+    prefix:   /temporada
+
+    
+golf_documento:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/documento.yml"
+    prefix:   /documento
+
+golf_jugador:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/jugador.yml"
+    prefix:   /jugador
+
+admin_campeonato:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/campeonato.yml"
+    prefix:   /campeonato
+
+    
+admin_user:
+    resource: "@GolfEnLaNubeBundle/Resources/config/routing/frontend/user.yml"
+    prefix:   /user
+    

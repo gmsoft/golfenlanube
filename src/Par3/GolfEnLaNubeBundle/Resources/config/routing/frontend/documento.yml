@@ -1,0 +1,30 @@
+documento:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:index" }
+
+documento_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:show" }
+
+documento_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:new" }
+
+documento_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:create" }
+    requirements: { _method: post }
+
+documento_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:edit" }
+
+documento_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:update" }
+    requirements: { _method: post|put }
+
+documento_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Documento:delete" }
+    requirements: { _method: post|delete }

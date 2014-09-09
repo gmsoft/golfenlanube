@@ -1,0 +1,65 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>Lista de Clubs</h3>
+{% endblock %}
+
+{% block body -%}
+
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a class='btn btn-default navbar-btn btn-sm ' href='{{ path('admin_documento_new', {'redirect': path('admin_club_importar_de_archivo_aag')} ) }}'>Importar Clubes de la AAG</a></li>
+				<li><a class='btn btn-default navbar-btn btn-sm' href='{{ path('admin_documento_new', {'redirect': path('admin_club_importar_canchas_de_archivo_aag')} ) }}'>Importar Canchas de la AAG</a></li>
+			</ul>
+			</div>	
+		</div>
+	</nav>
+
+	<div class='row'>
+		<div class='col-md-12'>
+			<table class="records_list table table-striped table-condensed ">
+				<thead>
+					<tr>
+		                <th class="text-center">Codigo AAG</th>
+		                <th class="text-center">Nombre</th>
+		                <th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for entity in entities %}
+
+		            <tr>
+		                <td class="text-center">{{ entity.codigoaag }}</td>
+		                <td>{{ entity.nombre }}</td>
+		                <td>
+		                <ul class='list-inline'>
+		                    <li>
+		                        <a href="{{ path('admin_club_show', { 'id': entity.id }) }}" class='btn btn-default btn-sm' >{{ icon('th-list') }} Datos y canchas</a>
+		                    </li>
+		                    <li>
+		                        <a href="{{ path('admin_club_edit', { 'id': entity.id }) }}" class='btn btn-default btn-sm'>{{ icon('edit') }} Modificar</a>
+		                    </li>
+		                </ul>
+		                </td>
+		            </tr>
+		        {% endfor %}
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-md-12'>
+			<ul>
+		        <!-- li>
+		            <a href="{#{ path('admin_club_new') }#}">
+		                Nuevo club
+		            </a>
+		        </li -->
+		    </ul>
+		</div>
+	</div>
+    {% endblock %}

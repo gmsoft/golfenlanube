@@ -1,0 +1,156 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header %}
+	<h3>Cargar tarjeta del jugador <small>{{ entity.torneofechajugador.jugador.persona.nombrecompleto }} - Matr&iacute;cula: {{ entity.torneofechajugador.jugador.matriculaaag }}</small></h3>
+	<h4>Torneo: {{ entity.torneofechajugador.torneofecha.torneo.nombre }} <small>|</small> Fecha: {{ entity.torneofechajugador.torneofecha.fecha|date('d-m-Y') }}</h4>
+{% endblock %}
+
+{% block body -%}
+	<div class='row'>
+		<div class='col-md-6'>
+					{{ form_errors(edit_form) }}
+			{{ form_start(edit_form, {style: 'horizontal'}) }}
+			{{ form_widget(edit_form._token) }}
+			{{ form_widget(edit_form.torneo_fecha_jugador) }}
+
+			{{ form_row(edit_form.estado) }}
+			
+			{% if (entity.hoyos|length > 9) %}
+				{% set cols = 6 %}
+				{% set filas = (entity.hoyos|length) / 2 %}
+			{% else %}
+				{% set cols = 12 %}
+				{% set filas = 9 %}
+			{% endif %}
+		
+			<div class='row '>
+				<div class='col-xs-{{ cols }} '>
+					<h4>Ida</h4>
+					<div class='form-group'>
+						<label class="control-label col-xs-4">Hoyo</label>
+						<label class="control-label col-xs-6">Golpes</label>
+					</div>
+					
+					{% for hoyo in edit_form.hoyos|slice(0, filas) %}
+		
+						<div class='form-group'>
+						{{ form_widget(hoyo.hoyo) }}
+							<label class="control-label col-xs-4" for="{{ hoyo.golpes.vars.id }}">
+								{{ hoyo.hoyo.vars.value }}
+							</label>
+							<div class="col-xs-6">
+								{{ form_widget(hoyo.golpes, {'attr': {'data-role':'golpes_por_hoyo', 'min': 1}}) }}
+							</div>
+						</div>
+		
+					{% endfor %}
+				</div>
+
+				{% if (cols == 6) %}
+					<div class='col-xs-{{ cols }} '>
+						<h4>Vuelta</h4>
+						<div class='form-group'>
+							<label class="control-label col-xs-4">Hoyo</label>
+							<label class="control-label col-xs-6">Golpes</label>
+						</div>
+						
+						{% for hoyo in edit_form.hoyos|slice(filas, filas) %}
+			
+							<div class='form-group'>
+							{{ form_widget(hoyo.hoyo) }}
+								<label class="control-label col-xs-4" for="{{ hoyo.golpes.vars.id }}">
+									{{ hoyo.hoyo.vars.value }}
+								</label>
+								<div class="col-xs-6">
+									{{ form_widget(hoyo.golpes, {'attr': {'data-role':'golpes_por_hoyo', 'min': 1}}) }}
+								</div>
+							</div>
+			
+						{% endfor %}
+					
+					</div>
+				{% endif %}
+			</div>
+				
+				{{ form_row(edit_form.submit) }}
+				
+				
+			</form>
+			
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-md-12'>
+			<ul class="record_actions list-inline">
+				<li>
+						<a href="{{ path('admin_torneofecha_lista_jugadores_cargar_tarjetas', {'id_torneo_fecha': entity.torneofechajugador.torneofecha.id}) }}">
+							Volver
+						</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript">
+
+function setHoyosRequired(val)
+{
+	$('input[data-role=golpes_por_hoyo]').each(function () {
+		if (val == true) 
+		{
+			$(this).attr('required', 'required');
+		} else {
+			$(this).removeAttr('required');
+		}
+		
+	});
+}
+
+$(document).ready(function (){
+	$('input[data-role=golpes_por_hoyo]').on('keypress', function (event) {
+	    if (event.which == 13) {
+	    	textboxes = $("input[data-role=golpes_por_hoyo]");
+	        currentBoxNumber = textboxes.index(this);
+	        if (textboxes[currentBoxNumber + 1] != null) 
+		    {
+	            nextBox = textboxes[currentBoxNumber + 1]
+	            nextBox.focus();
+	            nextBox.select();
+	            event.preventDefault();
+	            return false 
+            } else {
+                $('button:submit').focus();
+            }
+	        event.preventDefault();
+        }
+	});
+
+    $('form').on('submit', function (event) {
+	    if ( !confirm('Esta seguro que los datos de la tarjeta son correctos?') )
+	    { 
+		    event.preventDefault(); return ; 
+		}
+	});
+
+	$('select[id$=estado]').on('change', function(event) {
+		if ($('select[id$=estado] option:selected').val() == 'OK')
+		{ 
+			setHoyosRequired(true);
+		} else {
+			setHoyosRequired(false);
+		}
+	});
+
+	if ($('select[id$=estado] option:selected').val() == 'OK')
+	{ 
+		setHoyosRequired(true);
+	} else {
+		setHoyosRequired(false);
+	}	
+});
+</script> 
+
+{% endblock %}

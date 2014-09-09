@@ -1,0 +1,41 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+	<link href="{{ asset('/bundles/golfenlanube/css/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2-bootstrap.css') }}" rel="stylesheet" />
+	{{ form_stylesheet(form) }}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('/bundles/golfenlanube/js/jquery-ui-1.10.4.custom.min.js') }}" ></script>
+	<script src="{{ asset('/bundles/golfenlanube/js/select2/select2.min.js') }}" ></script>
+	{{ form_javascript(form) }}
+{% endblock %}
+
+{% block page_header -%}
+	<h3>Sumar club al circuito</h3>
+	<h4>Cicuito: {{ entity.temporada.circuito.nombre }} <small>|</small> Temporada: {{ entity.temporada.nombre }} &nbsp;<small>{{ entity.temporada.inicio|date('m/Y') }} &nbsp; a &nbsp; {{ entity.temporada.fin|date('m/Y') }}</small></h4>
+{% endblock %}
+
+{% block body %}
+
+	<div class='row'>
+		<div class='col-md-12'>
+    		{{ form(form) }}
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-md-12'>
+			<ul class="list-inline record_actions">
+			    <li>
+			        <a href="{{ path('admin_temporada_show_clubs', {'id': entity.temporada.id }) }}">
+			            Volver
+			        </a>
+			    </li>
+			</ul>
+		</div>
+	</div>
+
+{% endblock %}

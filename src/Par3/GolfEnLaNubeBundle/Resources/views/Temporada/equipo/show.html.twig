@@ -1,0 +1,56 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2-bootstrap.css') }}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block page_header -%}
+	<h3>{{ entity.temporadaclub }} </h3>
+	<h4>Configuraci&oacute;n de equipo para torneo {{ entity.torneofecha.torneo.nombre }}, {{ entity.torneofecha.fecha|date('d-m-Y') }}
+{% endblock %}
+
+{% block body -%}
+    
+	<div class='row'>
+		<div class='col-md-12'>
+			<ul class="list-group">
+				<li  class="list-group-item"><h4>Titulares</h4></li>
+				{% for tfj in entity.torneofechajugadores if tfj.titular == true %}
+					<li class="list-group-item">
+						{{ tfj.jugador }} &nbsp; {% if tfj.capitanequipo == true %}<strong><small>(Capitan del equipo)</small></strong>{% endif %}
+					</li>
+		
+				{% endfor %}
+		
+				{% if (entity.torneofecha.torneo.suplentesporclub > 0) %}
+					<li class="list-group-item"><h4>Suplentes</h4></li>
+					{% for tfj in entity.torneofechajugadores if tfj.titular != true %}
+						<li class="list-group-item">{{ tfj.jugador }}</li>
+					{% endfor %}
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-md-12'>
+			<ul class="record_actions list-inline">
+				{% if is_granted('ROLE_ADMIN_TODOS_EQUIPOS') %}
+			    <li>
+			        <a href="{{ path('admin_temporada_lista_equipos_por_torneo_fecha', {'id_torneo_fecha': entity.torneofecha.id}) }}">
+			            Volver
+			        </a>
+			    </li>
+			    {% endif  %}
+			    <!-- li>
+			        <a href="{#{ path('admin_equipo_edit', { 'id': entity.id }) }#}">
+			            Edit
+			        </a>
+			    </li>
+			    <li>{#{ form(delete_form) }#}</li -->
+			</ul>
+		</div>
+	</div>
+{% endblock %}

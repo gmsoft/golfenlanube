@@ -1,0 +1,30 @@
+torneofechajugador:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFechaJugador:index" }
+
+torneofechajugador_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFechaJugador:show" }
+
+torneofechajugador_new:
+    pattern:  /new
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFechaJugador:new" }
+
+torneofechajugador_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFechaJugador:create" }
+    requirements: { _method: post }
+
+torneofechajugador_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFechaJugador:edit" }
+
+torneofechajugador_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFechaJugador:update" }
+    requirements: { _method: post|put }
+
+torneofechajugador_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFechaJugador:delete" }
+    requirements: { _method: post|delete }

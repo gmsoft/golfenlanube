@@ -1,0 +1,126 @@
+<table class='table'>
+	<tbody>
+		<tr>
+			<th colspan='3'><h4>Titulares</h4></th>
+		</tr>
+		{% for tfj in form_jugadores if tfj.titular.vars.value == true %}
+			<tr>
+				<td class='col-lg-10'>
+					{% if tfj.capitan_equipo.vars.value == true %}<strong><small>Capitan del equipo</small></strong>{% endif %}	
+					{{ form_widget(tfj.jugador, {'attr': {'class': 'jugador'} }) }}
+				</td>
+				<td  class='col-sm-2' style='vertical-align: bottom'>
+					{{ form_widget(tfj.handicap_de_juego, {'attr': {'placeholder': 'HCP', 'class': 'handicap hcp_titular'} }) }}
+				</td>
+			</tr>
+			{{ form_widget(tfj.capitan_equipo) }}
+			{{ form_widget(tfj.titular)  }}
+			{{ form_widget(tfj.torneo_fecha)  }}
+			{{ form_widget(tfj.club)  }}
+		{% endfor %}
+		<tr>
+			<th colspan='3'><h4>Suplentes</h4></th>
+		</tr>
+		{% for tfj in form_jugadores if tfj.titular.vars.value == false %}
+			<tr>
+				<td  class='col-lg-10'>
+					{{ form_widget(tfj.jugador, {'attr': {'class': 'jugador suplente'}}) }}
+				</td>
+				<td  class='col-sm-1'>
+					{{ form_widget(tfj.handicap_de_juego,  {'attr': {'placeholder': 'HCP', 'class': 'handicap hcp_suplente'} }) }}
+				</td>
+			</tr>
+			{{ form_widget(tfj.capitan_equipo) }}
+			{{ form_widget(tfj.titular)  }}
+			{{ form_widget(tfj.torneo_fecha)  }}
+			{{ form_widget(tfj.club)  }}
+		{% endfor %}
+
+	</tbody>
+</table>
+
+{{ form_javascript(form_jugadores) }}
+
+<script type="text/javascript">
+
+	$('select.jugador').on('change', function () {
+
+		var input_handicap = $(this).parent().parent().find('.handicap');
+
+		setearHandicapDeJuego(input_handicap, this);
+		
+		if (jugadorYaFueSeleccionado(this))
+		{
+			alert("No puede seleccionar 2 veces al mismo jugador");
+			$(this).select2("val", "");
+			$(this).select2("open");
+		}
+
+		if ( alMenosUnJugadorSeleccionado() )
+		{
+			$('button:submit').removeClass('disabled');
+		} else {
+			if ( ! $('button:submit').hasClass('disabled')) $('button:submit').addClass('disabled');
+		}
+		
+	});
+
+
+	if ( alMenosUnJugadorSeleccionado() )
+	{
+		$('button:submit').removeClass('disabled');
+	} else {
+		if ( ! $('button:submit').hasClass('disabled')) $('button:submit').addClass('disabled');
+	}
+	
+
+	function setearHandicapDeJuego(input_handicap, jugador)
+	{
+		var id_jugador = $(jugador).find('option:selected').val() ;
+
+		if ( id_jugador == '' ) 
+		{
+			$(input_handicap).val('');
+		} else {
+			$.ajax ({
+				url: '{{ path('admin_temporada_obtener_handicap_de_juego', { 'id_torneo_fecha': entity.torneofecha.id } ) }}',
+				data: { 'id_jugador': id_jugador },
+				success: function (response) {
+					$(input_handicap).val(response);
+					}	
+			});
+		}
+	}
+	
+	function todosJugadoresSeleccionados()
+	{
+		var ret = true; 
+		$('select.jugador').each(function () {
+			if ( ! $(this).hasClass('suplente')) ret = ret && $.isNumeric($(this).find("option:selected").val()) ;
+		});
+		return ret; 
+	}
+
+	function alMenosUnJugadorSeleccionado()
+	{
+		var ret = false; 
+		$('select.jugador').each(function () {
+			if ( $.isNumeric($(this).find("option:selected").val())) ret = true ;
+		});
+		return ret; 
+	}
+
+	function jugadorYaFueSeleccionado(select_jugador)
+	{
+		var ret = false ; 
+		$('select.jugador').each(function () {
+			if ( $(this).attr('id') != $(select_jugador).attr('id') 
+					 && $(select_jugador).find('option:selected').val() == $(this).find('option:selected').val() && $(this).find('option:selected').val() != '') 
+			{
+				ret = true;
+			}
+		});
+		return ret; 
+	}
+
+</script>

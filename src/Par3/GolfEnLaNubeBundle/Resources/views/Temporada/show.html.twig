@@ -1,0 +1,46 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header %}
+	<h3>Temporada: {{ entity.nombre }} &nbsp;<small>{{ entity.inicio|date('m/Y') }} &nbsp; a &nbsp; {{ entity.fin|date('m/Y') }}</small></h3>
+	<h4>Cicuito: {{ entity.circuito.nombre }}</h4>
+{% endblock %}
+
+{% block body -%}
+
+	{{ include( 'GolfEnLaNubeBundle:Temporada:admin_temporada_show_tabs.html.twig', {'id_temporada': entity.id, 'active_path': 'admin_temporada_show' } ) }}
+
+	<div class='row '>
+		<div class='col-lg-12'>
+			<div class="panel panel-default">
+				<ul class="list-group">
+					<li class="list-group-item">
+						
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div class='row'>
+		<div class='col-lg-12'>
+			<ul class=" list-inline record_actions">
+			    <li>
+			        <a href="{{ path('admin_lista_temporada_por_circuito', { 'id_circuito': entity.circuito.id }) }}">
+			            Volver
+			        </a>
+			    </li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+	<script type="text/javascript">
+		$('button.ir_a').on('click', function () { 
+			document.location.href= $(this).data('url');
+		});
+	</script>
+
+{% endblock %}

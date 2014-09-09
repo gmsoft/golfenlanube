@@ -1,0 +1,37 @@
+parameters:
+#    golf_en_la_nube.example.class: Par3\GolfEnLaNubeBundle\Example
+
+services:
+#    golf_en_la_nube.example:
+#        class: %golf_en_la_nube.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+##    form.type.datePicker:
+##        class: Par3\GolfEnLaNubeBundle\Form\Type\DatePickerType
+##        tags:
+##            - { name: form.type, alias: datePicker }
+##    form.type.dateTimePicker:
+##        class: Par3\GolfEnLaNubeBundle\Form\Type\DateTimePickerType
+##        tags:
+##            - { name: form.type, alias: dateTimePicker }
+    form.type.entity_hidden:
+        class: Par3\GolfEnLaNubeBundle\Form\Type\EntityHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: entity_hidden }
+    golf_en_la_nube.documentos:
+        class: Par3\GolfEnLaNubeBundle\Controller\DocumentoController
+        calls: 
+            - [ setContainer, [@service_container] ]
+
+    golf_en_la_nube.menu_builder:
+        class: Par3\GolfEnLaNubeBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory", "@router", "@security.context", "@doctrine.orm.entity_manager"]
+
+    golf_en_la_nube.menu.main:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory_service: golf_en_la_nube.menu_builder
+        factory_method: mainMenu
+        arguments: ["@request"]
+        scope: request # needed as we have the request as a dependency here
+        tags:
+            - { name: knp_menu.menu, alias: main } # The alias is what is used to retrieve the menu

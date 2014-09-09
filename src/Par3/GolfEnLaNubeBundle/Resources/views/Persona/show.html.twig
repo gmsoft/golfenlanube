@@ -1,0 +1,68 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Persona</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Id_usuario</th>
+                <td>{{ entity.idusuario }}</td>
+            </tr>
+            <tr>
+                <th>Nombre_completo</th>
+                <td>{{ entity.nombrecompleto }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ entity.apellido }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ entity.sexo }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_nacimiento</th>
+                <td>{{ entity.fechanacimiento|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Tipo_documento</th>
+                <td>{{ entity.tipodocumento }}</td>
+            </tr>
+            <tr>
+                <th>Numero_documento</th>
+                <td>{{ entity.numerodocumento }}</td>
+            </tr>
+            <tr>
+                <th>Telefonos</th>
+                <td>{{ entity.telefonos }}</td>
+            </tr>
+            <tr>
+                <th>Pendiente_actualizacion</th>
+                <td>{{ entity.pendienteactualizacion }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('persona') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('persona_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

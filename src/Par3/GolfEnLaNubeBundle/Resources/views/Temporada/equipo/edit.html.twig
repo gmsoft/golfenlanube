@@ -1,0 +1,81 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block genemu_jqueryselect2_javascript %}
+
+    <script type="text/javascript">
+        $field = $('input.jugador');
+
+        var $configs = {{ configs|json_encode|raw }};
+
+        // custom configs
+        
+        $configs = $.extend($configs, {
+            query: function (query) {
+                query.callback(data);
+            }
+        });
+        // end of custom configs
+
+        $field.each(function (){ 
+			$(this).select2($configs); });
+    </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+	<link href="{{ asset('/bundles/golfenlanube/css/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2-bootstrap.css') }}" rel="stylesheet" />
+	{{ form_stylesheet(edit_form) }}
+{% endblock %}
+
+{% block page_header -%}
+	<h3>Editar Equipo</h3>
+	<h4>{{ entity.torneofecha.torneo.nombre }}, {{ entity.torneofecha.fecha|date('d-m-Y') }}  </h4>
+{% endblock %}
+
+{% block body -%}
+    
+	<div class='row'>
+		<div class='col-md-12'>
+			{#{ form(form, {'style': 'horizontal'}) }#}
+			{{ include( 'GolfEnLaNubeBundle:Temporada/equipo:form.html.twig', {'form': edit_form } ) }}
+		</div>
+	</div>
+    
+	<div class='row'>
+		<div class='col-md-12'>
+	
+	        <ul class="record_actions list-inline">
+			    <li>
+			        <a href="{{ path('admin_temporada_lista_equipos_por_torneo_fecha', {'id_torneo_fecha': entity.torneofecha.id}) }}">
+			            Volver
+			        </a>
+			    </li>
+			</ul>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('/bundles/golfenlanube/js/jquery-ui-1.10.4.custom.min.js') }}" ></script>
+	<script src="{{ asset('/bundles/golfenlanube/js/select2/select2.min.js') }}" ></script>
+
+	<script type="text/javascript">
+
+		function cargarListaJugadoresPorClub(id_club)
+		{
+			var _url = '{{ path('admin_temporada_formulario_jugadores_para_equipo', {'id_torneo_fecha': entity.torneofecha.id}) }}?id_club=' + id_club; 
+			$('#lista_jugadores').load(_url);
+		}
+	
+		$('#par3_golfenlanubebundle_equipo_temporada_club').on('change', function () {
+			cargarListaJugadoresPorClub($(this).find('option:selected').val());
+		});
+
+		$(document).ready(function () {
+			cargarListaJugadoresPorClub( $('#par3_golfenlanubebundle_equipo_temporada_club option:selected').val() );
+		});
+	</script>
+	{{ form_javascript(form) }}
+	
+{% endblock %}
+

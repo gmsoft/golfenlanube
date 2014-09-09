@@ -1,0 +1,27 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	
+{% endblock %}
+
+{% block body %}
+{% set esJugador = (app.user.persona.jugador is not null) %}
+{% if esJugador %} 
+	{% set jug = app.user.persona.jugador %}
+	{% set actualizacion = jug.getActualizacionesOrderByVigenciaDesc.first %} 
+{% endif %}
+	<div class='row'>
+		<div class='col-md-3 text-center' ></div>
+		<div class='col-md-6 text-center' >
+			<img src="{{ asset('/bundles/golfenlanube/images/inicio_circuitopar3.jpg') }}" alt="Bienvenido al sistema"/>
+			<h4><strong>{{ app.user.persona.nombrecompleto }} {% if esJugador %}- Matr&iacute;cula: {{ jug.id }}  {% endif %}</strong></h4>
+			{% if esJugador %}
+				<h4>HCP Par3: <strong> {{ actualizacion.handicappar3 }} </strong> - Tarjetas: <strong> {{ jug.totalPar3Ultimos12Meses }} </strong></h4>
+				<h4>HCP Std: <strong> {{ actualizacion.handicapestandar }} </strong> - Tarjetas: <strong> {{ jug.totalEstandarUltimos12Meses }} </strong> </h4>
+				<h4>Juega con:  <strong>{{ jug.handicapDeJuegoParaFechaActual }}</h4>
+				<h4>Vigencia de <strong>{{ actualizacion.vigencia|date('d-m-Y') }}</strong> a <strong>{{ actualizacion.vigenciaHasta()|date('d-m-Y') }}</strong></h4>
+			{% endif  %}
+		</div>
+		<div class='col-md-3 text-center' ></div>
+	</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{{ form_start(form, {'style': 'horizontal'}) }}
+
+	{{ form_errors(form) }}
+	{{ bootstrap_set_label_col(2) }}
+	{{ bootstrap_set_widget_col(10) }}  
+
+	
+	
+	{{ form_row(form.nombre)  }}
+	<ul class="list-group">
+		<li  class="list-group-item"><h4>Titulares</h4></li>
+		{% for tfj in form.torneo_fecha_jugadores if tfj.titular.vars.value == true %}
+				
+			
+			<li class="list-group-item">
+				{% if tfj.capitan_equipo.vars.value == true %}<strong><small>Capitan del equipo</small></strong>{% endif %}
+				{{ form_widget(tfj.jugador) }}
+			</li>
+			{{ form_widget(tfj.capitan_equipo) }}
+			{{ form_widget(tfj.titular)  }}
+			{{ form_widget(tfj.torneo_fecha)  }}
+			{{ form_widget(tfj.club)  }}
+
+		{% endfor %}
+
+		{% if (entity.torneofecha.torneo.suplentesporclub > 0) %}
+			<li class="list-group-item"><h4>Suplentes</h4></li>
+			{% for tfj in form.torneo_fecha_jugadores if tfj.titular.vars.value != true %}
+				<li class="list-group-item">{{ form_widget(tfj.jugador) }}</li>
+				{{ form_widget(tfj.capitan_equipo) }}
+				{{ form_widget(tfj.titular)  }}
+				{{ form_widget(tfj.torneo_fecha)  }}
+				{{ form_widget(tfj.club)  }}
+				
+			{% endfor %}
+		{% endif %}
+	</ul>
+	
+	{{ form_widget(form.submit) }}
+	{{ form_widget(form.club)  }}
+	{{ form_widget(form.torneo_fecha)  }}
+	<!-- hidden -->
+	{{ form_widget(form._token) }}
+</form>

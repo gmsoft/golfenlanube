@@ -1,0 +1,39 @@
+##user:
+##    pattern:  /
+##    defaults: { _controller: "GolfEnLaNubeBundle:User:index" }
+
+##user_show:
+##    pattern:  /{id}/show
+##    defaults: { _controller: "GolfEnLaNubeBundle:User:show" }
+
+##user_new:
+##    pattern:  /new
+##    defaults: { _controller: "GolfEnLaNubeBundle:User:new" }
+
+##user_create:
+##    pattern:  /create
+##    defaults: { _controller: "GolfEnLaNubeBundle:User:create" }
+##    requirements: { _method: post }
+
+##user_edit:
+##    pattern:  /{id}/edit
+##    defaults: { _controller: "GolfEnLaNubeBundle:User:edit" }
+
+##user_update:
+##    pattern:  /{id}/update
+##    defaults: { _controller: "GolfEnLaNubeBundle:User:update" }
+##    requirements: { _method: post|put }
+
+##user_delete:
+##    pattern:  /{id}/delete
+##    defaults: { _controller: "GolfEnLaNubeBundle:User:delete" }
+##    requirements: { _method: post|delete }
+
+user_edit_datos_personales:
+    pattern: /{id}/editDatosPersonales
+    defaults: { _controller: "GolfEnLaNubeBundle:User:editDatosPersonales" } 
+    
+user_update_datos_personales:
+    pattern: /{id}/updateDatosPersonales
+    defaults: { _controller: "GolfEnLaNubeBundle:User:updateDatosPersonales" } 
+ 

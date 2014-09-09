@@ -1,0 +1,21 @@
+torneofecha:
+    pattern:  /torneo/{id_torneo}
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:listaPorTorneo" }
+
+torneofecha_show_fecha:
+    pattern:  /{id}/show/fechaResultados
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:showFechaResultados" }
+
+torneofecha_show_resultados_por_club:
+    pattern:  /{id}/show/resultadosPorClub
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:showResultadosPorClub" }
+   
+
+torneofecha_show_resultados_por_neto_jugador:
+    pattern:  /{id}/show/resultadosPorNetoJugador
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:showResultadosPorNetoJugador" }
+
+torneofecha_show_juadores:
+    pattern:  /{id}/show/jugadores
+    defaults: { _controller: "GolfEnLaNubeBundle:TorneoFecha:showJugadores" }
+    

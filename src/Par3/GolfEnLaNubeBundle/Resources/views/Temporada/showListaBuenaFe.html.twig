@@ -1,0 +1,154 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header %}
+	<h3>Jugadores presentados en listas de buena fe</h3>
+	<h4>Cicuito: {{ temporada.circuito.nombre }} <small>|</small> Temporada: {{ temporada.nombre }} &nbsp;<small>{{ temporada.inicio|date('m/Y') }} &nbsp; a &nbsp; {{ temporada.fin|date('m/Y') }}</small></h4>
+{% endblock %}
+
+{% block body -%}
+
+	{{ include( 'GolfEnLaNubeBundle:Temporada:admin_temporada_show_tabs.html.twig', {'id_temporada': temporada.id, 'active_path': 'admin_temporada_show_lista_buena_fe' } ) }}
+
+	<div class='hidden'>
+		{{ form(quitar_form, {attr : { 'id': 'form_quitar_de_lista_buena_fe'}}) }}
+	</div>
+
+	<div class='row'>
+		<div class='col-xs-12'>
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+				    <div class="navbar-header">
+				        <button type="button" class="navbar-toggle"
+				                data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				            <span class="sr-only">Toggle navigation</span>
+				            <span class="icon-bar"></span>
+				            <span class="icon-bar"></span>
+				            <span class="icon-bar"></span>
+				        </button>
+			        </div>
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				    	<ul class="nav navbar-nav">
+				    		{% if (is_granted('ROLE_ADMIN_AGREGAR_JUGADOR_A_LISTA_BUENA_FE') and id_club is not null ) %}
+				    			<li>
+					    			<button class='btn btn-default navbar-btn btn-primary' data-button-link='{{ path('admin_temporadaclubjugador_new', {'id_temporada_club':  temporada_club.id})  }}' >
+					    				Agregar jugador a lista de buena fe 
+					    			</button> &nbsp; 
+				    			</li>
+				    		{% endif %}
+				    		{% if (is_granted('ROLE_ADMIN_IMPORTAR_LISTA_BUENA_FE')) %}
+					    		<li> 
+					    			<button class='btn btn-default navbar-btn' data-button-link='{{ path('admin_temporada_new_archivo_lista_buena_fe', {'id_temporada': temporada.id}) }}' >
+					    			<!-- button class='btn btn-default navbar-btn' data-button-link='{{ path('admin_documento_new', { 'redirect' : path('admin_lista_buena_fe_new', {'id': temporada.id}) })  }}' -->
+					    				Importar lista de buena fe
+					    			</button> &nbsp;
+				    			</li>
+			    			{% endif %}
+						</ul>
+						<form action="{{ path('admin_temporada_show_lista_buena_fe', { 'id_temporada': temporada.id }) }}" method='GET' class="navbar-form navbar-right" role="search">
+							<div class="form-group">
+								<input type="text" name="buscar" class="form-control" placeholder="Matricula/Nombre/Club">
+							</div>
+							<button type="submit" class="btn btn-default">{{ icon('search') }} Buscar</button>
+						</form>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-xs-12'>
+			<div class='table-responsive'>
+			<table class="records_list table table-striped table-condensed ">
+				<thead>
+					<tr>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th {% if entities.isSorted('j.id') %} class="sorted text-center"{% endif %}>
+							<small>{{ knp_pagination_sortable(entities, 'Matrícula', 'j.id') }}</small>
+						</th>
+						<th {% if entities.isSorted('p.nombre_completo') %} class="sorted text-center"{% endif %}>
+							<small>{{ knp_pagination_sortable(entities, 'Nombre', 'p.nombre_completo') }}</small>
+						</th>
+						<th {% if entities.isSorted('c.nombre') %} class="sorted text-center"{% endif %}>
+							<small>{{ knp_pagination_sortable(entities, 'Equipo', 'c.nombre') }}</small>
+						</th>
+						
+						<th class="text-center"><small>T Par3<br><small>(12 meses)</small></small></th>
+						<th class="text-center"><small>T Std<br><small>(12 meses)</small></small></th>
+						<th class="text-center"><small>HCP Par3</small></th>
+						<th class="text-center"><small>HCP Std</small></th>
+						<th class="text-center"><small>HCP<br>de juego</small></th>
+
+					</tr>
+				</thead>
+				<tbody>
+				{% for entity in entities %}
+					{% if ( entity.jugador.cumpletarjetas) %}
+						{% set handicapdejuego = entity.jugador.handicapdejuego %}
+						{% if ( entity.jugador.cumpletarjetaspar3) %}
+							{% set color_semaforo = 'green' %}
+							{% set descripcion_semaforo = 'El jugador cumple con las tarjetas Par3 requeridas. ' %}
+						{% else  %}
+							{% set color_semaforo = '#FFBF00' %}
+							{% set descripcion_semaforo = 'El jugador no cumple con las tarjetas Par3 requeridas pero completa con tarjetas estandar. ' %}
+						{% endif %}
+						{% set icono_semaforo = 'ok-sign' %}
+					{% else %}
+						{% set icono_semaforo = 'ban-circle' %}
+						{% set color_semaforo = 'red' %}
+						{% set descripcion_semaforo = 'El jugador no cumple con las tarjetas requeridas. ' %}
+					{% endif %}
+
+					<tr>
+						<td class='col-xs-1'>
+							{% if is_granted('ROLE_ADMIN_QUITAR_JUGADOR_DE_LISTA_BUENA_FE') %}
+								<button  data-toggle="tooltip" title="Quita al jugador de la lista de buena fe para esta temporada" data-role='button'  data-id-torneo-fecha-jugador='{{ entity.id }}' class='quitarDeListaBuenaFe btn btn-default'>{{ icon('remove') }} Quitar</button>
+							{% endif %}
+						&nbsp;</td>
+						<td ><span data-toggle="tooltip" title="{{ descripcion_semaforo }}" style='color:{{ color_semaforo }}; font-size: 1.2em'>{{ icon(icono_semaforo) }}</span></td>
+						<td class="text-center">{{ entity.jugador.matriculaaag }}</td>
+						<td>{{ entity.jugador.persona }}</td>
+						<td>{{ entity.temporadaclub }}</td>
+						<td class="text-center">{{ entity.jugador.totalpar3ultimos12meses }}</td>
+						<td class="text-center">{{ entity.jugador.totalestandarultimos12meses }}</td>
+						<td class="text-center">{{ entity.jugador.handicappar3 }}</td>
+						<td class="text-center">{{ entity.jugador.handicapestandar }}</td>
+						<td class="text-center">
+							{% if ( entity.jugador.cumpletarjetas) %} {{ entity.jugador.handicapdejuego }} {% else  %} - {% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			</div>
+		    <div class="navigation">
+			    {{ knp_pagination_render(entities, "", {}, { "prev_label": "<", "next_label": ">", "first_label": "<<", "last_label": ">>"})  }}
+			</div>
+		</div>
+	</div>	
+
+{% endblock  %}
+
+{% block javascripts %}
+
+	<script type="text/javascript">
+		$('.quitarDeListaBuenaFe').on('click', function () {
+			if (confirm('Esta seguro que quiere quitar a este jugador de la lista de buena fe?'))
+				submitQuitarDeListaBuenaFe($(this).data('id-torneo-fecha-jugador'));
+		});
+
+		function submitQuitarDeListaBuenaFe(id)
+		{
+			var _form = $('form[id=form_quitar_de_lista_buena_fe]')
+			var _action = $(_form).attr('action');
+			_action = _action.replace(/__NAME__/, id);
+			$(_form).attr('action', _action);
+			$(_form).submit();
+		}
+
+		$('[data-toggle=tooltip]').tooltip();
+		
+	</script>
+
+{% endblock %}

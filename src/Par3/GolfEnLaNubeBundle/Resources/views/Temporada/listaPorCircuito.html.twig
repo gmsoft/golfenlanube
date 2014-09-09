@@ -1,0 +1,52 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>Temporadas</h3>
+	<h4>Circuito: {{ circuito }}</h4>
+{% endblock %}
+
+{% block body -%}
+	<div class='row'>
+		<div class='col-md-12'>
+			<table class="records_list table table-striped table-condensed table-bordered">
+				<thead>
+					<tr>
+		
+		                <th>Nombre</th>
+		                <th>Inicio</th>
+		                <th>Fin</th>
+		                <th>&nbsp;</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		        {% for entity in entities %}
+		            <tr>
+		                <td>{{ entity.nombre }}</td>
+		                <td>{% if entity.inicio %}{{ entity.inicio|date('m-Y') }}{% endif %}</td>
+		                <td>{% if entity.fin %}{{ entity.fin|date('m-Y') }}{% endif %}</td>
+		                <td>
+		                <ul class='list-inline'>
+		                    <li>
+		                        <a href="{{ path('admin_temporada_show', { 'id': entity.id }) }}" class='btn btn-default btn-sm'>{{ icon('list') }} Detalles</a>
+		                    </li>
+		                </ul>
+		                </td>
+		            </tr>
+		        {% endfor %}
+		        </tbody>
+		    </table>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-md-12'>
+	        <ul>
+		        <li>
+		            <a href="{{ path('admin_temporada_new', {'id_circuito': circuito.id}) }}">
+		                Nueva temporada
+		            </a>
+		        </li>
+		    </ul>
+		</div>
+	</div>
+    {% endblock %}

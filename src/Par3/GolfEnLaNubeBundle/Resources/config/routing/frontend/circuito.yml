@@ -1,0 +1,30 @@
+circuito:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Circuito:index" }
+
+circuito_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Circuito:show" }
+
+circuito_new:
+    pattern:  /new/{id_institucion}
+    defaults: { _controller: "GolfEnLaNubeBundle:Circuito:new" }
+
+circuito_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Circuito:create" }
+    requirements: { _method: post }
+
+circuito_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Circuito:edit" }
+
+circuito_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Circuito:update" }
+    requirements: { _method: post|put }
+
+circuito_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Circuito:delete" }
+    requirements: { _method: post|delete }

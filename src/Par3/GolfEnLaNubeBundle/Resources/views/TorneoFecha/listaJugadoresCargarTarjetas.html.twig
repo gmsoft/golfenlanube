@@ -1,0 +1,137 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>{{ torneo_fecha.torneo.nombre }} <small>Fecha: {{ torneo_fecha.fecha|date('d-m-Y') }}</small></h3>
+	<h4>	
+		Circuito {{ torneo_fecha.torneo.temporada.circuito.nombre }}<small> - </small>Temporada {{ torneo_fecha.torneo.temporada.nombre }}
+	</h4>
+{% endblock %}
+
+{% block body -%}
+
+	<div class='hidden'>
+		{{ form(delete_tarjeta_form, {attr : { 'id': 'form_delete_tarjeta'}}) }}
+	</div>
+	
+	<div class='row '>
+		<div class='col-lg-12'>
+
+			<div class='table-responsive'>
+				<table class='table table-condensed'>
+
+				<thead>
+					<tr>
+						<th class="text-center">Matricula</th>
+						<th class="text-center">Nombre</th>
+						{% if (torneo_fecha.equipos|length > 0) %}
+							<th class="text-center">Equipo</th>
+						{% else  %}
+							<th class="text-center">Club</th>
+						{% endif %}
+					</tr>
+				</thead>
+				<tbody>
+
+				<tr>
+					<th colspan='4' class='active' >
+						Titulares
+					</th>
+				</tr>
+				{% for tfj in torneo_fecha.torneofechajugadores if  tfj.titular == true and tfj.jugador is not null %}
+					<tr>
+						<td class="text-center">{{ tfj.jugador.matriculaaag }}</td>
+						<td>{{ tfj.jugador.persona.nombrecompleto }}</td>
+						{% if (tfj.equipo is not null) %}
+							<td>{{ tfj.equipo.temporadaclub }}</td>
+						{% else  %}
+							<td>{{ tfj.club.nombre }}</td>
+						{% endif %}
+
+						<td>
+							{% if is_granted('ROLE_ADMIN_CARGAR_TARJETA') %}
+								{% if tfj.tarjeta is null %}
+									{% if tfj.equipo.tarjetascompletas == false %}
+										<a href='{{ path('admin_tarjeta_new', {'id_torneo_fecha_jugador': tfj.id}) }}' class='btn btn-default'>Cargar tarjeta</a>
+									{% else %}
+										- Todas las tarjetas ya cargadas -
+									{% endif %}
+								{% else  %}
+									<a href='{{ path('admin_tarjeta_edit', {'id': tfj.tarjeta.id}) }}' class='btn btn-default'>{{ icon('edit') }} Corregir tarjeta</a> &nbsp;
+									<button class='btn btn-default eliminarTarjeta' data-id-tarjeta='{{ tfj.tarjeta.id }}' >{{ icon('remove') }} Eliminar</button>
+								{% endif %}
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+				<tr>
+					<th colspan='4' class='active' >
+						Suplentes
+					</th>
+				</tr>
+				
+				{% for tfj in torneo_fecha.torneofechajugadores if  tfj.titular == false and tfj.jugador is not null %}
+					<tr>
+						<td class="text-center">{{ tfj.jugador.matriculaaag }}</td>
+						<td>{{ tfj.jugador.persona.nombrecompleto }}</td>
+						{% if (tfj.equipo is not null) %}
+							<td>{{ tfj.equipo.temporadaclub }}</td>
+						{% else  %}
+							<td>{{ tfj.club.nombre }}</td>
+						{% endif %}
+
+						<td>
+						{% if is_granted('ROLE_ADMIN_CARGAR_TARJETA') %}
+							{% if tfj.tarjeta is null %}
+								{% if tfj.equipo.tarjetascompletas == false %}
+									<a href='{{ path('admin_tarjeta_new', {'id_torneo_fecha_jugador': tfj.id}) }}' class='btn btn-default'>Cargar tarjeta</a>
+								{% else %}
+									- Tarjetas ya cargadas para este equipo -
+								{% endif %}
+							{% else  %}
+								<a href='{{ path('admin_tarjeta_edit', {'id': tfj.tarjeta.id}) }}' class='btn btn-default'>{{ icon('edit') }} Corregir tarjeta</a> &nbsp;
+								<button class='btn btn-default eliminarTarjeta' data-id-tarjeta='{{ tfj.tarjeta.id }}' >{{ icon('remove') }} Eliminar</button>
+							{% endif %}
+						{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+				
+				</tbody>
+				</table>
+			</div>
+		
+		</div>
+	</div>
+
+	<div class='row '>
+		<div class='col-lg-12'>
+			<ul class="list-inline record_actions">
+				<li>
+					<a href="{{ path('admin_temporada_lista_torneo_fechas_concluidas', {'id_temporada': torneo_fecha.torneo.temporada.id }) }}">Volver</a>
+			    </li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+
+	<script type="text/javascript">
+
+		$('.eliminarTarjeta').on('click', function () {
+			if (confirm('Esta seguro que quiere Eliminar esta tarjeta?'))
+				submitEliminarTarjeta($(this).data('id-tarjeta'));
+		});
+
+		function submitEliminarTarjeta(id)
+		{
+			var _form = $('form[id=form_delete_tarjeta]')
+			var _action = $(_form).attr('action');
+			_action = _action.replace(/__NAME__/, id);
+			$(_form).attr('action', _action);
+			$(_form).submit();
+		}
+
+	</script>
+
+{% endblock %}

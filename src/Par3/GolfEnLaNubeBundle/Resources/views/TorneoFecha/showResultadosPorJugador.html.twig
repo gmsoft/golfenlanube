@@ -1,0 +1,93 @@
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		
+		<!-- List group -->
+		<div class='table-responsive'>
+			<table class="table table-condensed table-striped">
+				<thead>
+					<tr>
+						<th class="text-center">Posicion</th>
+						<th class="text-center">Jugador</th>
+						<th class="text-center">Club</th>
+						<th>&nbsp;</th>
+						<th class="text-center">Ida</th>
+						{% if (entity.hoyos > 9) %}
+							<th class="text-center">Vuelta</th>
+						{% endif %}
+						<th class="text-center">Gross</th>
+						{% if orden_por == 'neto' %}
+							<th class="text-center">Handicap</th>
+							<th class="text-center">Neto</th>
+						{% endif  %}
+					</tr>
+				</thead>
+				<tbody>
+					{% for tarjeta in tarjetas %}
+						<tr class='totales_jugador' data-id-tarjeta='{{ tarjeta.id }}'>
+							<td class="text-center">
+								{% if tarjeta.estado == 'OK' %}
+									{% if (orden_por == 'neto' ) %}
+										{{ tarjeta.torneofechajugador.posicionporneto }}
+									{% elseif (orden_por == 'gross' ) %}
+										{{ tarjeta.torneofechajugador.posicionporgross }}
+									{% endif %}
+								{% else %}
+									{{ tarjeta.estado }}
+								{% endif %}
+							</td>
+							<td>{{ tarjeta.torneofechajugador.jugador.persona.nombrecompleto|default(' - Nombre no disponible') }}</td>
+							<td>{{ tarjeta.torneofechajugador.equipo.temporadaclub }}</td>
+							<td class="text-center">
+								{% if tarjeta.estado != 'OK' %}
+									{{ tarjeta.comentario }}
+								{% else  %} 
+									&nbsp;
+								{% endif %}
+							</td>
+							<td class="text-center">{{ tarjeta.totalida }}</td>
+							{% if (entity.hoyos > 9) %}
+								<td class="text-center">{{ tarjeta.totalvuelta }}</td>
+							{% endif %}
+							<td class="text-center">{{ tarjeta.scoregross|default('-') }}</td>
+							{% if orden_por == 'neto' %}
+								<td class="text-center">{{ tarjeta.torneofechajugador.handicapdejuego|default(tarjeta.torneofechajugador.handicappar3) }}</td>
+								<td class="text-center">{{ tarjeta.scoreneto|default('-') }}</td>
+							{% endif  %}
+						</tr>
+						<tr style='display:none' class='detalles_hoyoxhoyo' data-id-tarjeta='{{ tarjeta.id }}' >
+							<td>&nbsp;</td>
+							<td colspan='{% if (orden_por == 'neto' ) %}6{% else %}4{% endif %}'>
+								{% if (tarjeta.hoyos|length > 9) %}
+									{% set cols = (tarjeta.hoyos|length) / 2 %}
+								{% else %}
+									{% set cols = 9 %}
+								{% endif %}
+	
+									<table class='table table-condensed table-bordered'>
+										<tr>
+											<th class='text-center info'>Ida</th>
+											{% for hoyo in tarjeta.hoyos |slice(0, cols) %}
+												<th class='text-center'> {{ hoyo.golpes }} </th> 
+											{% endfor %}
+										</tr>
+										
+										{% if (tarjeta.hoyos|length > 9) %}
+											<tr>
+												<th class='text-center info'>Vuelta</th>
+												{% for hoyo in tarjeta.hoyos |slice(cols, cols) %}
+													<th class='text-center'> {{ hoyo.golpes }} </th> 
+												{% endfor %}
+											</tr>										
+										{% endif  %} 
+
+									</table>
+								
+							</td>
+							<td colspan='2'>&nbsp;</td>
+						</tr>
+						<tr class='hidden' ></tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>

@@ -1,0 +1,57 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+	<link href="{{ asset('/bundles/golfenlanube/css/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2.css') }}" rel="stylesheet" />
+	<link href="{{ asset('/bundles/golfenlanube/css/select2/select2-bootstrap.css') }}" rel="stylesheet" />
+	{{ form_stylesheet(form) }}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('/bundles/golfenlanube/js/jquery-ui-1.10.4.custom.min.js') }}" ></script>
+	<script src="{{ asset('/bundles/golfenlanube/js/select2/select2.min.js') }}" ></script>
+	{{ form_javascript(form) }}
+{% endblock %}
+
+{% block page_header -%}
+	<h3>Nueva fecha</h3>
+{% endblock %}
+
+{% block body %}
+
+	<div class='row'>
+		<div class='col-md-12'>
+		    {{ form_start(form, {'style': 'horizontal'}) }}
+		    	{{ form_row(form.apertura_inscripcion) }}
+		    	{{ form_row(form.cierre_inscripcion) }}
+			    {{ form_row(form.fecha) }}
+			    {{ form_row(form.hoyos) }}
+			    {{ form_row(form.cancha) }}
+			    {{ form_row(form.jugadores_por_linea) }}
+			    
+		    	<div class='form-group'>
+					<label class="control-label col-md-2 required" >Salidas simult&aacute;neas</label>
+					<div class='col-md-10'>
+						{{ form_widget(form.salidas_simultaneas)  }}
+					</div>
+				</div>
+				{{ form_row(form._token) }}
+				{{ form_row(form.torneo) }}
+				
+				{{ form_row(form.submit) }}
+			</form>	    
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-md-12'>
+			<ul class="list-inline record_actions">
+				<li>
+			        <a href="{{ path('admin_torneo_show', {'id': entity.torneo.id}) }}">
+			            Volver
+			        </a>
+			    </li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}

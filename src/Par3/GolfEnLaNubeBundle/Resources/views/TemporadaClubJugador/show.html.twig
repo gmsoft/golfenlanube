@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>TemporadaClubJugador</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Id_temporada_club</th>
+                <td>{{ entity.idtemporadaclub }}</td>
+            </tr>
+            <tr>
+                <th>Id_jugador</th>
+                <td>{{ entity.idjugador }}</td>
+            </tr>
+            <tr>
+                <th>Cumple_reglamento</th>
+                <td>{{ entity.cumplereglamento }}</td>
+            </tr>
+            <tr>
+                <th>Cumple_tarjetas</th>
+                <td>{{ entity.cumpletarjetas }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_temporadaclubjugador') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('admin_temporadaclubjugador_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

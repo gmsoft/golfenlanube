@@ -1,0 +1,137 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header %}
+	<h3>Tarjeta del jugador: &nbsp; <small>{{ entity.torneofechajugador.jugador.persona.nombrecompleto }} </strong>- Matr&iacute;cula: <strong>{{ entity.torneofechajugador.jugador.matriculaaag }}</strong></small></h3>
+{% endblock %}
+
+{% block body -%}
+	<div class='row '>
+		<div class='col-lg-8'>
+			<div class="panel panel-default">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<strong>{{ entity.torneofechajugador.torneofecha.torneo.nombre }} - {{ entity.torneofechajugador.torneofecha.torneo.formatojuego.nombre }} </strong> | Fecha: <strong>{{ entity.torneofechajugador.torneofecha.fecha|date('d-m-Y') }}</strong>
+					</li>
+					<li class="list-group-item">
+						Handicap de juego: <strong>{{ entity.torneofechajugador.handicapdejuego }}</strong>
+					</li>
+					<li class="list-group-item">
+						Estado: <strong>{{ entity.getdescripcionestado(entity.estado) }}</strong><br/>
+						{% if entity.estado != 'OK' %}
+							{{ entity.comentario }}
+						{% endif %}
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class='col-sm-4'>
+			<div class="panel panel-default">
+				<ul class="list-group">
+					<li class="list-group-item">
+						Estado: <strong>{{ entity.getdescripcionestado(entity.estado) }}</strong><br/>
+					</li>
+					{% if entity.estado != 'OK' %}
+					<li class="list-group-item">
+						{{ entity.comentario }}
+					</li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	{% if (entity.hoyos|length > 9) %}
+		{% set cols = 6 %}
+		{% set filas = (entity.hoyos|length) / 2 %}
+	{% else %}
+		{% set cols = 12 %}
+		{% set filas = 9 %}
+	{% endif %}
+
+	<div class='row '>
+		<div class='col-xs-{{ cols }} '>
+			<table class='table table-bordered table-condensed'>
+				<thead>
+					<tr>
+						<th class='text-center'> Hoyo   </th>
+						<th class='text-center'> Golpes </th>
+					</tr>
+				</thead>
+				<tbody>
+					{% set total_ida = 0  %}
+					{% for hoyo in entity.hoyos|slice(0, filas) %}
+					<tr>
+						<td>{{ hoyo.hoyo }}</td>
+						<td>{{ hoyo.golpes|default('-') }}</td>
+					</tr>
+					{% set total_ida = total_ida + hoyo.golpes %}
+					{% endfor %}
+				</tbody>
+				<tfoot>
+					<tr class="active">
+						<td> Ida</td>
+						<td>{{ total_ida }}</td>
+					</tr>
+					{% if (cols == 12) %}
+						<tr class="info">
+							<td class='text-right'> Neto </td>
+							<td>{{ (total_ida - entity.torneofechajugador.handicapdejuego) }}</td>
+						</tr>
+					{% endif %}
+				</tfoot>
+			</table>
+		</div>
+		
+		{% if (cols == 6) %}
+			<div class='col-xs-{{ cols }} '>
+				<table class='table table-bordered table-condensed'>
+					<thead>
+						<tr>
+							<th class='text-center'> Hoyo </th>
+							<th class='text-center'> Golpes </th>
+						</tr>
+					</thead>
+					<tbody>
+						{% set total_vuelta = 0 %}
+						{% for hoyo in entity.hoyos|slice(filas, filas) %}
+						<tr>
+							<td>{{ hoyo.hoyo }}</td>
+							<td>{{ hoyo.golpes|default('-') }}</td>
+						</tr>
+						{% set total_vuelta = total_vuelta + hoyo.golpes %}
+						{% endfor %}
+					</tbody>
+					<tfoot>
+						<tr class="active">
+							<td> Vuelta </td>
+							<td>{{ total_vuelta }}</td>
+						</tr>
+						<tr class="info">
+							<td class='text-right'> Gross </td>
+							<td>{{ (total_ida + total_vuelta) }}</td>
+						</tr>
+						<tr class="info">
+							<td class='text-right'> Neto </td>
+							<td>{{ (total_ida + total_vuelta - entity.torneofechajugador.handicapdejuego ) }}</tr>
+						
+					</tfoot>
+				</table>
+			</div>
+		{% endif  %}
+		
+	</div>
+	
+	<ul class="record_actions list-inline ">
+		<li>
+			<a href="{{ path('admin_torneofecha_lista_jugadores_cargar_tarjetas', {'id_torneo_fecha': entity.torneofechajugador.torneofecha.id}) }}">
+				Volver
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('admin_tarjeta_edit', { 'id': entity.id }) }}">
+				Modificar 
+			</a>
+		</li>
+		<!-- li>{#{ form(delete_form) }#}</li -->
+	</ul>
+{% endblock %}

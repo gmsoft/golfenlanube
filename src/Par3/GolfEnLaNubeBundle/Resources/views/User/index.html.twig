@@ -1,0 +1,93 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>Lista de Usuarios</h3>
+{% endblock %}
+
+{% block body -%}
+
+
+	<div class='row'>
+		<div class='col-xs-12'>
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle"
+								data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+				
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							{% if is_granted('ROLE_ADMIN_CREAR_USUARIO') %}
+								<li>
+									<button class='btn btn-default navbar-btn ' data-button-link='{{ path('admin_user_new') }}'>Nuevo Usuario</button>
+								</li>
+							{% endif %}
+						</ul>
+						<form action="{{ path('admin_user') }}" method='GET' class="navbar-form navbar-right" role="search">
+							<div class="form-group">
+								<input type="text" name="buscar" class="form-control" placeholder="Usuario o Nombre">
+							</div>
+							<button type="submit" class="btn btn-default">{{ icon('search') }} Buscar</button>
+						</form>
+						
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-xs-12'>
+			<div class='table-responsive'>
+				<table class="records_list table table-striped table-condensed">
+					<thead>
+						<tr>
+							<th {% if entities.isSorted('u.username') %}class="sorted text-center"{% else %}  class="text-center"{% endif %}><small>{{ knp_pagination_sortable(entities, 'Usuario', 'u.username') }}</small></th>
+							<th {% if entities.isSorted('p.nombre_completo') %}class="sorted text-center"{% else %}  class="text-center"{% endif %}><small>{{ knp_pagination_sortable(entities, 'Apellido y Nombre', 'p.nombre_completo') }}</small></th>
+							<th {% if entities.isSorted('p.nombre_completo') %}class="sorted text-center"{% else %}  class="text-center"{% endif %}><small>{{ knp_pagination_sortable(entities, 'Email', 'u.email') }}</small></th>
+							<th class="text-center"><small>Habilitado</small></th>
+							<th class="text-center"><small>&Uacute;ltimo ingreso</small></th>
+							<th class="text-center"><small>Tipo de Doc</small></th>
+							<th class="text-center"><small>Nro de Doc</small></th>
+							<th class="text-center"><small>Sexo</small></th>
+							<th class="text-center"><small>Fecha de Nacimiento</small></th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for entity in entities %}
+						<tr>
+							<td><a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
+							<td>{{ entity.persona.nombrecompleto }}</td>
+							<td class="text-center">{{ entity.email }}</td>
+							<td class="text-center">{% if entity.enabled == true %}Si{% else %}No{% endif %}</td>
+							<td class="text-center">{% if entity.lastLogin %}{{ entity.lastLogin|date('Y-m-d H:i:s') }}{% else %}-{% endif %}</td>
+							<td class="text-center">{{ entity.persona.tipodocumento|default('-') }}</td>
+							<td class="text-center">{{ entity.persona.numerodocumento|default('-') }}</td>
+							<td class="text-center">{{ entity.persona.sexo|default('-') }}</td>
+							<td class="text-center">{{ (entity.persona.fechanacimiento|date('d-m-Y'))|default('-') }}</td>
+							<td>
+								<a href="{{ path('admin_user_show', { 'id': entity.id }) }}" class='btn btn-default btn-sm'>Detalles</a>
+								{% if is_granted('ROLE_ADMIN_CREAR_USUARIO') %}
+									<a href="{{ path('admin_user_edit', { 'id': entity.id }) }}" class='btn btn-default btn-sm'>Modificar</a>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		    <div class="navigation">
+			    {{ knp_pagination_render(entities, "", {}, { "prev_label": "<", "next_label": ">", "first_label": "<<", "last_label": ">>"})  }}
+			</div>
+			
+		</div>
+	</div>
+
+{% endblock %}

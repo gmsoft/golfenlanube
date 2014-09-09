@@ -1,0 +1,30 @@
+admin_tarjeta:
+    pattern:  /
+    defaults: { _controller: "GolfEnLaNubeBundle:Tarjeta:index" }
+
+admin_tarjeta_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "GolfEnLaNubeBundle:Tarjeta:show" }
+
+admin_tarjeta_new:
+    pattern:  /new/torneofechajugador/{id_torneo_fecha_jugador}
+    defaults: { _controller: "GolfEnLaNubeBundle:Tarjeta:new" }
+
+admin_tarjeta_create:
+    pattern:  /create
+    defaults: { _controller: "GolfEnLaNubeBundle:Tarjeta:create" }
+    requirements: { _method: post }
+
+admin_tarjeta_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "GolfEnLaNubeBundle:Tarjeta:edit" }
+
+admin_tarjeta_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "GolfEnLaNubeBundle:Tarjeta:update" }
+    requirements: { _method: post|put }
+
+admin_tarjeta_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "GolfEnLaNubeBundle:Tarjeta:delete" }
+    requirements: { _method: post|delete }

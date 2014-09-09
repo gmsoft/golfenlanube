@@ -1,0 +1,60 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block page_header -%}
+	<h3>{{ entity.torneo.temporada.nombre }} </h3>
+	<h4>Equipos para para torneo {{ entity.torneo.nombre }}, {{ entity.fecha|date('d-m-Y') }}
+{% endblock %}
+
+{% block body -%}
+	<div class='row'>
+		<div class='col-md-12'>
+			<div class='table-responsive'>
+				<table class="records_list table table-striped table-condensed ">
+					<thead>
+						<tr>
+			
+			                <th class="text-center">Nombre</th>
+			                <th class="text-center">Club</th>
+			                <th class="text-center"># Jugadores</th>
+			                <th>&nbsp;</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			        {% for equipo in equipos  %}
+			            <tr>
+			                <td>{{ equipo.temporadaclub }}</td>
+			                <td>{{ equipo.club.nombre }}</td>
+			                <td class="text-center">{{ equipo.getTorneoFechaJugadoresConJugadorInformado|length }}</td>
+			                <td>
+			                	<a href="{{ path('admin_temporada_equipo_show', { 'id': equipo.id }) }}" class='btn btn-default btn-sm'>{{ icon('list') }} Ver</a>
+			                	{% if equipo.torneofechajugadorescontarjeta|length == 0 %}
+			                	
+				                	<a href="{{ path('admin_temporada_equipo_edit', { 'id': equipo.id }) }}" class='btn btn-default btn-sm'>{{ icon('edit') }} Modificar</a>
+			                        <a href="{{ path('admin_temporada_equipo_delete', { 'id': equipo.id }) }}" class='btn btn-default btn-sm'>{{ icon('remove') }} Eliminar</a>
+		                        {% endif %}
+			                </td>
+			            </tr>
+			        {% endfor %}
+			        </tbody>
+			    </table>
+		    </div>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-md-12'>
+	        <ul class='list-inline'>
+		        <li>
+		            <a href="{{ path('admin_temporada_equipo_new', {'id_torneo_fecha': entity.id}) }}" class="btn btn-default btn-primary">
+		                Configurar nuevo equipo
+		            </a>
+		        </li>
+		        <li>
+		            <a href="{{ path('admin_temporada_lista_torneo_fechas_configurar_equipo', {'id_temporada': entity.torneo.temporada.id}) }}" >
+		                Volver
+		            </a>
+		        </li>
+		    </ul>
+		</div>
+	</div>
+    {% endblock %}

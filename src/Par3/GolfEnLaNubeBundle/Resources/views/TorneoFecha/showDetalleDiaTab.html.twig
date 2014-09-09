@@ -1,0 +1,107 @@
+{% extends 'GolfEnLaNubeBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+<style> 
+	tr.totales_jugador:hover {
+		cursor:pointer;
+		color: #428BCA; 
+	}
+</style>
+{% endblock %}
+
+{% block page_header -%}
+	<h3>{{ entity.torneo.nombre }}, ({{ entity.cancha.club.nombre }})</h3>
+	<h4>Circuito {{ entity.torneo.temporada.circuito.nombre }} ({{ entity.fecha|date('d/m/Y') }}) <small> - </small>Temporada {{ entity.torneo.temporada.nombre }}</h4>
+{% endblock %}
+
+{% block body -%}
+        {% if dias > 1 %} 
+        <div class='row '>
+		<div class='col-lg-12'>
+		
+			<ul id='resultados' class="nav nav-tabs">
+			  <li class="active"><a href="#jugadores" data-toggle="tab">Jugadores</a></li>
+			  <li><a href="#dia1" data-toggle="tab">Dia 1</a></li>
+			  <li><a href="#dia2" data-toggle="tab">Dia 2</a></li>
+  			  <li><a href="#resultados-finales" data-toggle="tab">Resultados Finales</a></li>
+  			  <li><a href="#puntajes" data-toggle="tab">Distribuci&oacute;n de puntos</a></li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+				{% if entity.torneofechajugadores|length > 0  %}
+			  <div class="tab-pane active" id="jugadores">{{ render(controller('GolfEnLaNubeBundle:TorneoFecha:showJugadores', {'id': entity.id })) }}</div>
+			  <div class="tab-pane" id="dia1">{{ render(controller('GolfEnLaNubeBundle:TorneoFecha:showResultadosPorNetoJugador', {'id': entity.id })) }}</div>
+			  <div class="tab-pane" id="dia2">{{ render(controller('GolfEnLaNubeBundle:TorneoFecha:showResultadosPorGrossJugador', {'id': entity.id })) }}</div>
+			  <div class="tab-pane" id="resultados-finales">{{ render(controller('GolfEnLaNubeBundle:TorneoFecha:showResultadosPorClub', {'id': entity.id })) }}</div>
+			  <div class="tab-pane" id="puntajes">{{ render(controller('GolfEnLaNubeBundle:TorneoFecha:showDistribucionDePuntos', {'id': entity.id })) }}</div>
+			  	{% else %}
+			  	 <h4>No se han cargado datos para este torneo aún</h4>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+        {% else %} 
+	<div class='row '>
+		<div class='col-lg-12'>
+		
+			<ul id='resultados' class="nav nav-tabs">
+			  <li class="active"><a href="#jugadores" data-toggle="tab">Jugadores</a></li>
+			  <li><a href="#neto" data-toggle="tab">Netos Individuales</a></li>
+			  <li><a href="#gross" data-toggle="tab">Gross Individuales</a></li>
+  			  <li><a href="#club" data-toggle="tab">Resultados por Club</a></li>
+  			  <li><a href="#puntajes" data-toggle="tab">Distribuci&oacute;n de puntos</a></li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+				{% if entity.torneofechajugadores|length > 0  %}
+			  <div class="tab-pane active" id="jugadores">{{ render(controller('GolfEnLaNubeBundle:TorneoFecha:showJugadores', {'id': entity.id })) }}</div>
+			  <div class="tab-pane" id="neto">{{ render(controller('GolfEnLaNubeBundle:TorneoFecha:showResultadosPorNetoJugador', {'id': entity.id })) }}</div>
+			  <div class="tab-pane" id="gross">{{ render(controller('GolfEnLaNubeBundle:TorneoFecha:showResultadosPorGrossJugador', {'id': entity.id })) }}</div>
+			  <div class="tab-pane" id="club">{{ render(controller('GolfEnLaNubeBundle:TorneoFecha:showResultadosPorClub', {'id': entity.id })) }}</div>
+			  <div class="tab-pane" id="puntajes">{{ render(controller('GolfEnLaNubeBundle:TorneoFecha:showDistribucionDePuntos', {'id': entity.id })) }}</div>
+			  	{% else %}
+			  	 <h4>No se han cargado datos para este torneo aún</h4>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+		
+	<div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+
+	    </div>
+	  </div>
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+
+	$('#resultados a').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+	});
+
+	function toggleDetallesHoyoxhoyo(id_tarjeta)
+	{
+		var tr_detalles = $('.detalles_hoyoxhoyo[data-id-tarjeta=' + id_tarjeta + ']');
+
+		$(tr_detalles).toggle();
+		//if ( $(tr_detalles).hasClass('hidden') ) $(tr_detalles).removeClass('hidden');
+		//else $(tr_detalles).addClass('hidden'); 
+	}
+	
+	$(document).on('click', '.totales_jugador',  function () {
+			var id_tarjeta = $(this).attr('data-id-tarjeta');
+			toggleDetallesHoyoxhoyo(id_tarjeta);
+	});
+		
+</script>
+
+
+{% endblock %}

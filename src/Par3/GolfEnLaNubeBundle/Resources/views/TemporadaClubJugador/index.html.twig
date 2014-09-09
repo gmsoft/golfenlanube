@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>TemporadaClubJugador list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id_temporada_club</th>
+                <th>Id_jugador</th>
+                <th>Cumple_reglamento</th>
+                <th>Cumple_tarjetas</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('admin_temporadaclubjugador_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.idtemporadaclub }}</td>
+                <td>{{ entity.idjugador }}</td>
+                <td>{{ entity.cumplereglamento }}</td>
+                <td>{{ entity.cumpletarjetas }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_temporadaclubjugador_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_temporadaclubjugador_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('admin_temporadaclubjugador_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}
