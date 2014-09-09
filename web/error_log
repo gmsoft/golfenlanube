@@ -1,0 +1,3 @@
+[06-Jun-2014 13:42:30 America/Argentina/Buenos_Aires] PHP Fatal error:  Maximum execution time of 100 seconds exceeded in /home/golfnube/sistema/circuitopar3/src/Par3/GolfEnLaNubeBundle/Entity/Jugador.php on line 424
+[08-Aug-2014 22:50:13 America/Argentina/Buenos_Aires] PHP Fatal error:  Call to undefined method Doctrine\DBAL\Connection::execute() in /home/golfnube/sistema.decomm/circuitopar3/src/Par3/GolfEnLaNubeBundle/Controller/JugadorController.php on line 581
+[08-Aug-2014 22:57:34 America/Argentina/Buenos_Aires] PHP Fatal error:  Call to undefined method Doctrine\DBAL\Driver\PDOConnection::execute() in /home/golfnube/sistema.decomm/circuitopar3/src/Par3/GolfEnLaNubeBundle/Controller/JugadorController.php on line 582
